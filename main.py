@@ -1,5 +1,5 @@
 import pygame
-from PPlay.window import *
+from pplay import *
 
 # funções do jogo
 def menu_principalf():
@@ -7,11 +7,13 @@ def menu_principalf():
     while menu:
         ### DESENHOS
         # Fundo
-        screen.fill((0, 0, 0))
+        fundo = pygame.image.load('anexos/img/37412.jpg')
+        screen.blit(fundo, (0, 0))
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
+        if keys[pygame.K_KP_ENTER]:
             menu = False
+            jogof()
 
         # Update da cena
         pygame.display.update()
