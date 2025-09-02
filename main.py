@@ -1,4 +1,5 @@
 import pygame
+from PPlay.window import *
 
 # funções do jogo
 def menu_principalf():
