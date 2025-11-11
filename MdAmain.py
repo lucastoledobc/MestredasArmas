@@ -5,15 +5,13 @@ from PPlay.gameimage import *
 
 from MdAJogo import *
 from MdAgameover import *
+from MdAMenu import *
 
 def final():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running[0] = False
 
     screen.update()
 
-room = ["Jogo"]
+room = ["Menu"]
 
 screen = Window(1280,720)
 screen.set_title("Mestre das Armas")
@@ -22,6 +20,17 @@ entrar = True
 running = [True]
 
 while running[0]:
+    if room[0] == "Menu":
+        if entrar:
+            mouse = screen.get_mouse()
+            entrar = False
+
+        running_menu(screen,room,mouse)
+
+        if room[0] != "Menu":
+            entrar = True
+
+        final()
     if room[0] == "Jogo":
         if entrar:
             mouse = screen.get_mouse()
