@@ -1,0 +1,34 @@
+game objects
+
+
+player:
+
+objeto pertencente ao personagem principal do jogo, controlado pelo jogador. Ele se movimenta usando as teclas do teclado, andando para a esquerda quando apertada a tecla "A" e andando para esquerda quando a tecla "D" é apertada. Utilizando a tecla "espaço" o jogador dá um pulo, que decrementa um valor fixo de sua velocidade vertical, o que faz com que o player se desloque para cima. Enquanto está no ar, o jogador tem sua velocidade vertical incrementada por uma gravidade, responsável por puxá-lo de volta para o chão. Ao colidir com o solo, sua velocidade vertical torna-se 0, já que a gravidade não o empurrará para dentro do solo. O jogador também tem uma vida, responsável por mantê-lo jogando. Ao ser atacado por um inimigo, essa vida é decrementada e, quando ela chega a zero, a fase acaba. 
+
+Mãos:
+
+são os objetos chaves para a gameplay do jogo. No inicio da fase, são geradas duas mãos - mão esquerda e mão direita - que acompanham a posição relativa ao player, ficando em posições correspondentes à onde a mão deveria estar posicionada. Cada mão pode portar uma arma distinta, utilizada para atacar os inimigos e lhes infringir dano até que a variável vida desses inimigos chegue a zero. ao clicar com o botão direito do mouse, você ataca com a arma segurada pela mão direita e, ao clicar com o botão esquerdo no mouse, você ataca com a arma da mão esquerda. As mãos podem segurar uma variedade de armas, cada uma com propriedades de range, velocidade de ataque e dano, entre elas:
+
+espada longa: tem médio alcance, bom dano e velocidade de ataque média, ótimo para inimigos grandes e com vida interessante;
+espada curta (adaga): pequeno alcance, pequeno dano, mas rápida velocidade de ataque, ideal para inimigos de curto alcance fracos, que geralmente vêm em horda;
+machado: tem médio alcance, dano excelente, mas baixa velocidade de ataque, atacando em uma área maior;
+pistola: arma de longo alcance, dano bom e boa velocidade de ataque, boa para inimigos que atacam de grandes distâncias, porém necessita de munição para funcionar;
+metralhadora: arma de longo alcance, dano médio e alta velocidade de ataque, ótima para hordas de inimigos, porém com alto uso de munição;
+sniper: longuíssimo alcance, altíssimo dano, mas baixa velocidade de ataque, também necessitando de munição;
+
+essas armas poderão ser personalizáveis, com possibilidade de skins e apetrechos de dano e efeitos, como dano de fogo para causar queimadura, dano de raio que cause eletricidade e dano veneno para causar envenenamento.
+
+Inimigos:
+
+Os inimigos terão diversas aparências dependendo da fase em que eles estão inseridos, mas sempre realizando ações semelhantes à outros inimigos. eles terão 4 possibilidades de geração:
+
+> inimigo bruto: ele tem mais vida e ataca a curta distância, com um bom dano. terá uma IA básica de acompanhar o eixo x do jogador e poderá pular obstáculos que estiverem o impedindo de chegar nesse objetivo
+
+> inimigo furtivo: ataca a curta distância, porém com altíssima velocidade, alcançando o jogador com maior facilidade, utilizando o mesmo modelo de IA básica do inimigo bruto. 
+
+> inimigos de hordas: estes virão em grandes grupos com vários deles, sendo fracos e pouco resistentes, precisando de uma atenção extra do jogador para que eles não se aglomerem e diminuam sua barra de vida rapidamente após isso. Eles também vão em direção ao jogador, encurralando-o para gerarem mais dano
+
+> inimigo atirador: esta classe de inimigos é diferente. ao invés de ir atrás do jogador para ficarem fisicamente próximos, estes escolhem atacá-lo à distância para dar suporte aos outros inimigos. eles terão um grande espectro de alcance, com alguns precisando de maior proximidade, enquanto outros preferem ficar mais distantes. por fim, sua busca não será em equiparar-se ao eixo x do jogador, mas sim ao eixo y, para que suas miras possam alcançar seu alvo.
+
+
+Inimigos terão ataques, sprites e animações modificadas dependendo do cenário, como um inimigo em fase de fogo tendo ataques flamejantes, enquanto em fases de grama atacarão com gravetos, espadas de madeira ou outras coisas mais próximas da natureza local. porém, eles sempre apresentarão um dos comportamentos apresentados acima, com algumas pequenas variações.
