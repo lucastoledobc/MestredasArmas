@@ -13,18 +13,45 @@ def criar_espada(hand,armas):
         sword.xspeed,sword.yspeed = 0,0
 
         sword.name = hand.name
+        sword.hand = hand.hand
         sword.dano = 5
         sword.acertados = []
 
         armas.append(sword)
 
-def weapons(player,armas,screen):
+    if hand.name == "picareta":
+        sword = Animation("MdASprites/sword attack.png",9,False)
+        sword.set_total_duration(600)
+
+        sword.xspeed,sword.yspeed = 0,0
+
+        sword.name = hand.name
+        sword.dano = 4
+        sword.acertados = []
+
+        armas.append(sword)
+
+def weapons(player,hand,armas,screen):
     for arma in armas:
         if arma.name == "bala":
             arma.x += arma.xspeed*screen.delta_time()
             arma.y += arma.yspeed*screen.delta_time()
             arma.draw()
         if arma.name == "sword":
+
+            n = arma.hand
+            arma.x = player.x+player.width
+            arma.y = player.y-player.height+arma.height
+
+            hand[n].hide()
+
+            if arma.is_playing() == False:
+                armas.remove(arma)
+                hand[n].unhide()
+            arma.draw()
+            arma.update()
+        
+        if arma.name == "picareta":
             arma.x = player.x+player.width
             arma.y = player.y-player.height/2
 

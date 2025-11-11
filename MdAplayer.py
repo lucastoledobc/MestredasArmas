@@ -25,12 +25,14 @@ def criar_player(screen):
     player.xspeed = 0
     player.yspeed = 0
 
-    hand1 = GameImage("MdASprites/sword.png")
+    hand1 = Animation("MdASprites/sword.png",1,False)
     hand1.name = "sword"
     hand1.cooldown = 1
-    hand2 = GameImage("MdASprites/gun.png")
+    hand1.hand = 1
+    hand2 = Animation("MdASprites/gun.png",1,False)
     hand2.name = "gun"
     hand2.cooldown = 2
+    hand2.hand = 2
 
     return [player,hand1,hand2]
 
@@ -59,7 +61,6 @@ def ataque(hand,projetil,mouse):
 
     if hand.name == "sword":
         criar_espada(hand,projetil)
-        print("ataque!!")
         
 
 
@@ -94,7 +95,7 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
     player[0].update()
    
         
-    weapons(player[0],projetil,screen)
+    weapons(player[0],player,projetil,screen)
 
     #ATAQUE DAS MÃOS
 
