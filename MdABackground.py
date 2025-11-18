@@ -58,12 +58,16 @@ def continuar_bg(screen,background):
 
         background.append(rock)
 
-def bg_running(background,screen,player):
+def bg_running(background,screen,player,projetil):
     for b in background:
         b.x -= 180*screen.delta_time()
 
         if b.name != "floor" and abs(b.y+b.height-(player.y+player.height)) <= 14 and player.hp == player.hpcor and b.collided(player):
             player.hp -= 1
+
+        for p in projetil:
+            if p.name == "picareta" and abs(p.height+p.y-(b.y+b.height))<=30 and p.collided(b) and b.name == "rock":
+                 background.remove(b)
 
     background[0].timer += screen.delta_time()
 

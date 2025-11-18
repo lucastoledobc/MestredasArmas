@@ -26,11 +26,12 @@ def criar_player(screen):
     player.yspeed = 0
 
     hand1 = Animation("MdASprites/sword.png",1,False)
-    hand1.name = "sword"
+    hand1.name = "picareta"
     hand1.cooldown = 1
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)
-    hand2.name = "gun"
+    hand2.name = "metralhadora"
+    hand2.munition = 10
     hand2.cooldown = 2
     hand2.hand = 2
 
@@ -39,27 +40,16 @@ def criar_player(screen):
 
 def ataque(hand,projetil,mouse):
     if hand.name == "gun":
-        bala = GameImage("MdASprites/bala.png")
-        bala.name = "bala"
-        bala.dano = 2
+        criar_bala(hand,projetil,mouse)
 
-        bala.x = hand.x+hand.width
-        bala.y = hand.y+hand.height/2
-
-        dx = bala.x - mouse.get_position()[0]
-        dy = bala.y - mouse.get_position()[1]
-
-        dist = sqrt(dx**2+dy**2)
-
-        dx/=-dist
-        dy/=-dist
-
-        bala.xspeed = 600*dx
-        bala.yspeed = 600*dy
-
-        projetil.append(bala)
+    if hand.name == "metralhadora":
+        if hand.munition >= 1:
+            criar_bala(hand,projetil,mouse)     
 
     if hand.name == "sword":
+        criar_espada(hand,projetil)
+
+    if hand.name == "picareta":
         criar_espada(hand,projetil)
         
 
@@ -91,6 +81,35 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
         if player[0].hpcor <= player[0].hp: 
             player[0].hpcor = player[0].hp
     
+    if timer[1] < 0:
+        screen.draw_text(f"{abs(timer[1]):.2f}",player[1].x+player[1].width/2,player[1].y+player[1].height+20)
+    if timer[2] < 0:
+        screen.draw_text(f"{abs(timer[2]):.2f}",player[2].x+player[2].width/2,player[2].y+player[2].height+20)
+
+
+    #extra da metralhadora
+
+    for i in range(2):
+        if player[1+i].name == "metralhadora":
+            if player[1+i].munition<10:
+                player[1+i].munition += screen.delta_time()*1.33
+
+            else:
+                player[1+i].munition = 10
+            screen.draw_text(f"balas: {floor(player[1+i].munition)}",player[1+i].x+10,player[1+i].y-5)
+
+    '''
+    MATATABI SEI LÁ impede de sair da tela
+    '''
+
+    if player[0].y+player[0].height >= screen.height:
+        player[0].y = screen.height - player[0].height
+
+    if player[0].x < 0:
+        player[0].x = 0
+
+    if player[0].x + player[0].width > screen.width:
+        player[0].x = screen.width - player[0].width
     
     player[0].update()
    

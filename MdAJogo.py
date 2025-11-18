@@ -21,7 +21,7 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     #background.draw()
 
-    bg_running(background,screen,player[0])
+    bg_running(background,screen,player[0],projetil)
 
     bg_draw(screen,background,"floor",player[0])
     bg_draw(screen,background,"acima",player[0])

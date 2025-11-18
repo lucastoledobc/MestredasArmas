@@ -28,6 +28,7 @@ def criar_inimigo(screen,room,type=1):
         inimigo.xspeed = 0
         inimigo.yspeed = 0
 
+        inimigo.especie = ""
         inimigo.hp = 0
         inimigo.defesa = 0
         inimigo.type = 0
@@ -40,6 +41,7 @@ def criar_inimigo(screen,room,type=1):
         inimigo.x = screen.width*random.randint(1,1)
         inimigo.y = screen.height*random.randint(0,100)/100
 
+        inimigo.especie = "rock"
         inimigo.hp = 4
         inimigo.defesa = random.randint(0,10)//10
         inimigo.type = 1
@@ -56,6 +58,7 @@ def criar_inimigo(screen,room,type=1):
         inimigo.x = screen.width*random.randint(1,1)
         inimigo.y = screen.height*random.randint(0,100)/100
 
+        inimigo.especie = "rock"
         inimigo.hp = 2
         inimigo.defesa = random.randint(0,10)//10
         inimigo.type = 2
@@ -105,16 +108,24 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
 
         Scr_enemprojeteis(enem,enemprojeteis,player[0],screen)    
 
-            
+        def dano(enem,p,condicion="none"):
+            if  p.dano-enem.defesa>0:
+                enem.hp -= (p.dano-enem.defesa)*(1+(enem.especie==condicion))
+            else:
+                enem.hp -= 1
 
         for p in projeteis:
             if p.collided(enem):
                 if p.name == "bala":    
                     projeteis.remove(p)
-                    enem.hp -= p.dano-enem.defesa
+                dano(enem,p)
                 if p.name == "sword":    
                     if encontrar(p.acertados,enem) == 0:
-                        enem.hp -= p.dano-enem.defesa
+                        dano(enem,p)
+                        p.acertados.append(enem)
+                if p.name == "picareta":    
+                    if encontrar(p.acertados,enem) == 0:
+                        dano(enem,p,"rock")
                         p.acertados.append(enem)
 
         if enem.hp <= 0 and enem.type != 0:
