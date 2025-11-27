@@ -54,7 +54,7 @@ def criar_bala(hand,projetil,mouse):
         bala = Animation("MdASprites/Fosgo.png",4)
         bala.set_total_duration(750)
         bala.name = "fogo"
-        bala.dano = 0.25
+        bala.dano = 0.45
 
         bala.acertados = []
 
@@ -84,10 +84,13 @@ def criar_bala(hand,projetil,mouse):
         bala.name = "flecha"
         bala.dano = 0.25
 
-        bala.hp = 1.5
+        bala.ant = 1
+
+        bala.hp = 5
         bala.launch = 0
         bala.hand = hand.hand
         bala.spd = 0
+        hand.cooldown = 3
 
         bala.xspeed = 0
         bala.yspeed = 0
@@ -132,10 +135,6 @@ def weapons(player,hand,armas,screen,mouse):
             arma.x += arma.xspeed*screen.delta_time()
             arma.y += arma.yspeed*screen.delta_time()
             arma.draw()
-        if arma.name == "balam": #metralhadora
-            arma.x += arma.xspeed*screen.delta_time()
-            arma.y += arma.yspeed*screen.delta_time()
-            arma.draw()
         if arma.name == "sword":
 
             n = arma.hand
@@ -165,7 +164,7 @@ def weapons(player,hand,armas,screen,mouse):
             arma.update()
 
         if arma.name == "fogo":
-            arma.dano = 4*screen.delta_time()
+            arma.dano = 6*screen.delta_time()
             arma.hp -= screen.delta_time()
             arma.x += arma.xspeed*screen.delta_time()
             arma.y += arma.yspeed*screen.delta_time()
@@ -184,17 +183,15 @@ def weapons(player,hand,armas,screen,mouse):
             if (arma.launch == 0): 
 
                 n = arma.hand
-                arma.x = hand[n].x+hand[n].width
-                arma.y = hand[n].y+hand[n].height/2+arma.height/2
 
-                hand[n].cooldown = 1
+                arma.x = hand[n].x+hand[n].width - (arma.spd)*10
+                arma.y = hand[n].y+hand[n].height/2-arma.height/2
+                arma.curr_frame = 0
 
-                ant = mouse.is_button_pressed(arma.hand)
+                arma.spd = min(arma.spd+2*screen.delta_time(),3)
+                if arma.spd == 3:
+                    print(arma.name)
 
-                arma.spd = min(arma.spd+screen.delta_time(),3)
-                if mouse.is_button_pressed(arma.hand) == False:
-
-                    print(arma.hand)
                     dx = arma.x - mouse.get_position()[0] + random.randint(-10,10)
                     dy = arma.y - mouse.get_position()[1] + random.randint(-10,10)
 
@@ -208,8 +205,12 @@ def weapons(player,hand,armas,screen,mouse):
                     arma.dano = arma.spd**2
 
                     arma.launch = 1
+                
+
 
             elif arma.launch == 1:
+                
+                arma.curr_frame = 0
 
                 arma.x += arma.xspeed*screen.delta_time()
                 arma.y += arma.yspeed*screen.delta_time()
@@ -219,12 +220,15 @@ def weapons(player,hand,armas,screen,mouse):
 
                 if arma.hp <= 0:
                     arma.launch = 2
-                    arma.yspeed = -10
+                    arma.yspeed = -100
+                    arma.xspeed = -100
 
             else:
-                arma.x -= arma.xspeed*screen.delta_time()/4
+                arma.set_total_duration(250)
+
+                arma.x += arma.xspeed*screen.delta_time()
                 arma.y += arma.yspeed*screen.delta_time()
-                arma.yspeed+=0.9*60*screen.delta_time()
+                arma.yspeed+=1.9*60*screen.delta_time()
                 
                 if arma.y >= screen.height+50:
                     armas.remove(arma)
