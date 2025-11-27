@@ -50,6 +50,33 @@ def criar_bala(hand,projetil,mouse):
         bala.yspeed = 1000*dy
 
         projetil.append(bala)
+    if hand.name == "lança-chamas":
+        bala = Animation("MdASprites/Fosgo.png",4)
+        bala.set_total_duration(750)
+        bala.name = "fogo"
+        bala.dano = 0.25
+
+        bala.acertados = []
+
+        bala.x = hand.x+hand.width 
+        bala.y = hand.y+hand.height/2
+        hand.munition = floor(hand.munition-1)
+        hand.cooldown = 0.1
+        bala.hp = 1.5
+            
+
+        dx = bala.x - mouse.get_position()[0] + random.randint(-10,10)
+        dy = bala.y - mouse.get_position()[1] + random.randint(-10,10)
+
+        dist = sqrt(dx**2+dy**2)
+
+        dx/=-dist
+        dy/=-dist
+
+        bala.xspeed = 300*dx
+        bala.yspeed = 300*dy
+
+        projetil.append(bala)
 
 
 def criar_espada(hand,armas):
@@ -120,6 +147,19 @@ def weapons(player,hand,armas,screen):
                 hand[n].unhide()
             arma.draw()
             arma.update()
+
+        if arma.name == "fogo":
+            arma.dano = 4*screen.delta_time()
+            arma.hp -= screen.delta_time()
+            arma.x += arma.xspeed*screen.delta_time()
+            arma.y += arma.yspeed*screen.delta_time()
+
+            arma.draw()
+            arma.update()
+
+            if arma.hp <= 0:
+                armas.remove(arma)
+
 
 
             

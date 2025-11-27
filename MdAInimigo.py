@@ -2,6 +2,7 @@ from PPlay.gameimage import *
 from PPlay.gameobject import *
 from PPlay.keyboard import *
 from PPlay.animation import *
+from MdAConstantes import *
 from math import *
 import random
 
@@ -38,9 +39,8 @@ def criar_inimigo(screen,room,type=1):
         inimigo = Animation("MdASprites/ENEMIES/Jones.png",4,True)
         inimigo.set_total_duration(1000)
 
-        inimigo.x = screen.width*random.randint(1,1)
-        inimigo.y = screen.height*random.randint(0,100)/100
-
+        inimigo.x = screen.width
+        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
         inimigo.especie = "rock"
         inimigo.hp = 4
         inimigo.defesa = random.randint(0,10)//10
@@ -55,9 +55,8 @@ def criar_inimigo(screen,room,type=1):
         inimigo = Animation("MdASprites/ENEMIES/Inimigo2.png",13,True)
         inimigo.set_total_duration(3000)
 
-        inimigo.x = screen.width*random.randint(1,1)
-        inimigo.y = screen.height*random.randint(0,100)/100
-
+        inimigo.x = screen.width
+        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
         inimigo.especie = "rock"
         inimigo.hp = 2
         inimigo.defesa = random.randint(0,10)//10
@@ -69,6 +68,26 @@ def criar_inimigo(screen,room,type=1):
 
         inimigo.xspeed = 0
         inimigo.yspeed = 0
+
+    if type == 3:
+
+        inimigo = Animation("MdASprites/ENEMIES/Inimigo3.png",12,True)
+        inimigo.set_total_duration(1000)
+
+        inimigo.x = screen.width
+        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
+
+        inimigo.especie = "rock"
+        inimigo.hp = 4
+        inimigo.defesa = 1
+        inimigo.type = 3
+        inimigo.spd = SPD_BACKGROUND
+        inimigo.rocknroll = 0
+
+        inimigo.xspeed = 0
+        inimigo.yspeed = 0
+
+
 
 
     return inimigo
@@ -83,8 +102,10 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
         enem.xspeed = sign(player[0].x-enem.x)*spd
         enem.yspeed = sign(player[0].y-enem.y)*spd*(abs(player[0].y-enem.y)>= 5)
 
+        ###COMPORTAMENTO###
+
         if enem.type == 0:
-            enem.x -= 180*screen.delta_time()
+            enem.x -= SPD_BACKGROUND*screen.delta_time()
             enem.y -= 360*screen.delta_time()
 
         if enem.type == 1:
@@ -106,15 +127,23 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     criar_enemprojeteis(enem,enemprojeteis,player[0])
                     enem.timer = 0
 
-        Scr_enemprojeteis(enem,enemprojeteis,player[0],screen)    
+        if enem.type == 3:
+            enem.x -= enem.spd*screen.delta_time()
+
+            if enem.rocknroll == 0:
+                criar_enemprojeteis(enem,enemprojeteis,player)
+                enem.rocknroll = 1
+
+        Scr_enemprojeteis(enem,enemprojeteis,player[0],screen,inimigo)    
 
         def dano(enem,p,condicion="none"):
             if  p.dano-enem.defesa>0:
                 enem.hp -= (p.dano-enem.defesa)*(1+(enem.especie==condicion))
             else:
-                enem.hp -= 1
+                enem.hp -= min(1,p.dano)
 
         for p in projeteis:
+            lança_chamas = 0
             if p.collided(enem):
                 if p.name == "bala":    
                     projeteis.remove(p)
@@ -127,6 +156,9 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     if encontrar(p.acertados,enem) == 0:
                         dano(enem,p,"rock")
                         p.acertados.append(enem)
+                if p.name == "fogo" and lança_chamas == 0:
+                        lança_chamas = 1 
+                        dano(enem,p)
 
         if enem.hp <= 0 and enem.type != 0:
                 
@@ -150,6 +182,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
 
 
 def criar_enemprojeteis(enem,enemprojeteis,player):
+   
     if enem.type == 2:
         p = Animation("MdASprites/ENEMIES/Inimigo2projétil.png",4)
         p.set_total_duration(1000)
@@ -157,6 +190,7 @@ def criar_enemprojeteis(enem,enemprojeteis,player):
         p.dano = 1
         p.x = enem.x+enem.width/2
         p.y = enem.y+enem.height/2
+        p.type = enem.type
 
         x = player.x+player.width/2
         y = player.y+player.height/2
@@ -174,7 +208,24 @@ def criar_enemprojeteis(enem,enemprojeteis,player):
 
         enemprojeteis.append(p)
 
-def Scr_enemprojeteis(enem,enemprojeteis,player,screen):
+    if enem.type == 3:
+        p = Animation("MdASprites/ENEMIES/Inimigo3projétil.png",12)
+        p.set_total_duration(1000)
+
+        p.dano = 2
+        p.type = enem.type
+        p.x = enem.x+enem.width/2-p.width/2
+        p.y = enem.y+enem.height/2 - p.height/2
+
+        p.enem = enem
+
+        p.xspeed = -enem.spd
+        p.yspeed = 0
+        
+
+        enemprojeteis.append(p)
+
+def Scr_enemprojeteis(enem,enemprojeteis,player,screen,enemmatriz):
 
     for p in enemprojeteis:
         p.x+=p.xspeed*screen.delta_time()
@@ -182,6 +233,13 @@ def Scr_enemprojeteis(enem,enemprojeteis,player,screen):
         if p.collided(player) and player.hp == player.hpcor:
             player.hp -= p.dano
             enemprojeteis.remove(p)
+
+        if p.type == 3:
+            if encontrar(enemmatriz,p.enem) == 0:
+                enemprojeteis.remove(p)
+
+            else:
+                p.x = p.enem.x+p.enem.width/2 - p.width/2
             
 
 

@@ -3,6 +3,7 @@ from PPlay.animation import *
 from PPlay.gameobject import *
 from PPlay.keyboard import *
 from MdAArmas import *
+from MdAConstantes import *
 from math import *
 
 
@@ -30,7 +31,7 @@ def criar_player(screen):
     hand1.cooldown = 1
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)
-    hand2.name = "metralhadora"
+    hand2.name = "lança-chamas"
     hand2.munition = 10
     hand2.cooldown = 2
     hand2.hand = 2
@@ -44,7 +45,11 @@ def ataque(hand,projetil,mouse):
 
     if hand.name == "metralhadora":
         if hand.munition >= 1:
-            criar_bala(hand,projetil,mouse)     
+            criar_bala(hand,projetil,mouse)  
+
+    if hand.name == "lança-chamas":
+        if hand.munition >= 1:
+            criar_bala(hand,projetil,mouse)  
 
     if hand.name == "sword":
         criar_espada(hand,projetil)
@@ -73,6 +78,7 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
             p.draw()
     
     else:
+        if player[0].hp + 1 <= player[0].hpcor: player[0].hpcor = player[0].hp + 1
         player[0].hpcor -= 0.5*screen.delta_time()
         if player[0].hpcor*100%8<3:
                 for p in player:
@@ -90,7 +96,7 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
     #extra da metralhadora
 
     for i in range(2):
-        if player[1+i].name == "metralhadora":
+        if player[1+i].name == "metralhadora" or player[1+i].name == "lança-chamas":
             if player[1+i].munition<10:
                 player[1+i].munition += screen.delta_time()*1.33
 
@@ -102,8 +108,11 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
     MATATABI SEI LÁ impede de sair da tela
     '''
 
-    if player[0].y+player[0].height >= screen.height:
-        player[0].y = screen.height - player[0].height
+    if player[0].y+player[0].height >= DOWN_TELA:
+        player[0].y = DOWN_TELA - player[0].height
+
+    if player[0].y <= TOP_TELA:
+        player[0].y = TOP_TELA
 
     if player[0].x < 0:
         player[0].x = 0
@@ -143,6 +152,9 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
 
     screen.draw_text("KILLS: "+str(player[0].kills),50,100,24,[255,255,255])
 
+    
+    screen.draw_text(str(mouse.get_position()[0])+","+str(mouse.get_position()[1]),300,300)
+
 
 
 def xspeed_player(y=0):
@@ -179,3 +191,4 @@ def scr_mira_running(mira,mouse):
 
     mira.draw()
     mira.update()
+

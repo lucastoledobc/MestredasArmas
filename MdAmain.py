@@ -46,6 +46,6 @@ while running[0]:
             entrar = True
     
     if room[0] == "GAME OVER":
-
+        
         running_game_over(screen, room)
         final()
