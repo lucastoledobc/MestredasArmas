@@ -1,2 +1,4 @@
 PPlay/
 __pycache__/
+.vscode/settings.json
+scores.txt
