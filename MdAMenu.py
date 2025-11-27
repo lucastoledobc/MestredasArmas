@@ -5,7 +5,7 @@ import datetime
 
 
 # função pra tela de salvamento do ranking
-def frank(score):
+def frank(pontos):
     # variáveis
     screen = Window(1280,720)
     cor0 = (0,0,0)
@@ -15,7 +15,7 @@ def frank(score):
 
     # título
     newrec = Sprite("MdASprites/Menu/newrec.png")
-    newrec.set_position(int(newrec.width/2)-newrec.width/2, 50)
+    newrec.set_position(int(screen.width/2)-newrec.width/2, 50)
 
     # cria uma array para receber os scores
     scores=[]
@@ -25,14 +25,14 @@ def frank(score):
 
     # escreve na forma de biblioteca
     for i in range(0, 10, 2):
-        score={}
-        score['nome']=scores2[i]
-        score['score']=int(scores2[i+1])
-        scores.append(score)
+        player={}
+        player['nome']=scores2[i]
+        player['score']=int(scores2[i+1])
+        scores.append(player)
     
     # agora verifica se o jogador fez mais pontos que o último colocado
-    if score > scores[4]["score"]:
-        loop_rank=True        
+    if pontos > scores[4]["score"]:
+        loop_rank=True
         nome=''
         write_time = 0
 
@@ -71,7 +71,7 @@ def frank(score):
                 date = str(x.day)+"/"+str(x.month)+"/"+str(x.year)[2:]
 
                 # cria uma biblioteca com nome, score e data e adiciona ao array de scores
-                score_novo = {"nome": nome, "score": int(score), "data": str(date)}
+                score_novo = {"nome": nome, "score": int(pontos), "data": str(date)}
                 scores.append(score_novo)
 
                 # ordena
@@ -88,11 +88,11 @@ def frank(score):
                 # escreve o novo score de cada um nele
                 for i in range(5):
                     with open("scores.txt", "a") as f:
-                        texto=" "+str(scores[i]['nome'])+" "+str(scores[i]['score'])+" "+str(scores[i]['data'])
+                        texto=" "+str(scores[i]['nome'])+" "+str(scores[i]['score'])
                         f.write(texto)
                 
                 # vai para tela de ranking
-                frank(scores)
+                menu_rank()
             
 
             screen.update()
@@ -162,11 +162,10 @@ def running_menu(room):
             scores2=f.read().split()
 
         # escreve na forma de biblioteca
-        for i in range(0, 15, 3):
+        for i in range(0, 10, 2):
             score={}
             score['nome']=scores2[i]
             score['score']=int(scores2[i+1])
-            score['data']=scores2[i+2]
             scores.append(score)
 
     # caso contrario, cria uma nova
