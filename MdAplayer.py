@@ -31,7 +31,7 @@ def criar_player(screen):
     hand1.cooldown = 1
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)
-    hand2.name = "lança-chamas"
+    hand2.name = "arco"
     hand2.munition = 10
     hand2.cooldown = 2
     hand2.hand = 2
@@ -50,6 +50,9 @@ def ataque(hand,projetil,mouse):
     if hand.name == "lança-chamas":
         if hand.munition >= 1:
             criar_bala(hand,projetil,mouse)  
+    
+    if hand.name == "arco":
+        criar_bala(hand,projetil,mouse)  
 
     if hand.name == "sword":
         criar_espada(hand,projetil)
@@ -102,7 +105,8 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
 
             else:
                 player[1+i].munition = 10
-            screen.draw_text(f"balas: {floor(player[1+i].munition)}",player[1+i].x+10,player[1+i].y-5)
+            if player[1+i].name == "metralhadora": screen.draw_text(f"balas: {floor(player[1+i].munition)}",player[1+i].x+10,player[1+i].y-5)
+            if player[1+i].name == "lança-chamas": screen.draw_text(f"gás: {floor(player[1+i].munition)}",player[1+i].x+10,player[1+i].y-5)
 
     '''
     MATATABI SEI LÁ impede de sair da tela
@@ -123,7 +127,7 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
     player[0].update()
    
         
-    weapons(player[0],player,projetil,screen)
+    weapons(player[0],player,projetil,screen,mouse)
 
     #ATAQUE DAS MÃOS
 
@@ -151,9 +155,6 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
         coração.x+=coração.width*1.5
 
     screen.draw_text("KILLS: "+str(player[0].kills),50,100,24,[255,255,255])
-
-    
-    screen.draw_text(str(mouse.get_position()[0])+","+str(mouse.get_position()[1]),300,300)
 
 
 

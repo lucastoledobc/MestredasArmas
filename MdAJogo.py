@@ -5,6 +5,7 @@ from PPlay.sprite import *
 from PPlay.gameimage import *
 
 from MdABackground import *
+from MdAMenu import *
 
 
 def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira):
@@ -40,3 +41,4 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     if player[0].hp <= 0:
         room[0] = "GAME OVER"
+        frank(player[0].kills*100)

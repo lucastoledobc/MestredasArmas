@@ -59,7 +59,7 @@ def criar_bala(hand,projetil,mouse):
         bala.acertados = []
 
         bala.x = hand.x+hand.width 
-        bala.y = hand.y+hand.height/2
+        bala.y = hand.y+hand.height/2-bala.height/2
         hand.munition = floor(hand.munition-1)
         hand.cooldown = 0.1
         bala.hp = 1.5
@@ -75,6 +75,22 @@ def criar_bala(hand,projetil,mouse):
 
         bala.xspeed = 300*dx
         bala.yspeed = 300*dy
+
+        projetil.append(bala)
+
+    if hand.name == "arco":
+        bala = Animation("MdASprites/flechas.png",8)
+        bala.set_total_duration(10000)
+        bala.name = "flecha"
+        bala.dano = 0.25
+
+        bala.hp = 1.5
+        bala.launch = 0
+        bala.hand = hand.hand
+        bala.spd = 0
+
+        bala.xspeed = 0
+        bala.yspeed = 0
 
         projetil.append(bala)
 
@@ -110,7 +126,7 @@ def criar_espada(hand,armas):
 
         armas.append(sword)
 
-def weapons(player,hand,armas,screen):
+def weapons(player,hand,armas,screen,mouse):
     for arma in armas:
         if arma.name == "bala":
             arma.x += arma.xspeed*screen.delta_time()
@@ -160,6 +176,59 @@ def weapons(player,hand,armas,screen):
             if arma.hp <= 0:
                 armas.remove(arma)
 
+        if arma.name == "flecha":
 
+            arma.draw()
+            arma.update()
+
+            if (arma.launch == 0): 
+
+                n = arma.hand
+                arma.x = hand[n].x+hand[n].width
+                arma.y = hand[n].y+hand[n].height/2+arma.height/2
+
+                hand[n].cooldown = 1
+
+                ant = mouse.is_button_pressed(arma.hand)
+
+                arma.spd = min(arma.spd+screen.delta_time(),3)
+                if mouse.is_button_pressed(arma.hand) == False:
+
+                    print(arma.hand)
+                    dx = arma.x - mouse.get_position()[0] + random.randint(-10,10)
+                    dy = arma.y - mouse.get_position()[1] + random.randint(-10,10)
+
+                    dist = sqrt(dx**2+dy**2)
+
+                    dx/=-dist
+                    dy/=-dist    
+
+                    arma.xspeed = (arma.spd**2)*100*dx
+                    arma.yspeed = (arma.spd**2)*100*dy
+                    arma.dano = arma.spd**2
+
+                    arma.launch = 1
+
+            elif arma.launch == 1:
+
+                arma.x += arma.xspeed*screen.delta_time()
+                arma.y += arma.yspeed*screen.delta_time()
+
+                arma.draw()
+                arma.update()
+
+                if arma.hp <= 0:
+                    arma.launch = 2
+                    arma.yspeed = -10
+
+            else:
+                arma.x -= arma.xspeed*screen.delta_time()/4
+                arma.y += arma.yspeed*screen.delta_time()
+                arma.yspeed+=0.9*60*screen.delta_time()
+                
+                if arma.y >= screen.height+50:
+                    armas.remove(arma)
 
             
+
+
