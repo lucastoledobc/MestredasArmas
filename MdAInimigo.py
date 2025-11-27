@@ -95,7 +95,7 @@ def criar_inimigo(screen,room,type=1):
 def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
     if timer[0] >= 3*((16-(15-player[0].kills)*(player[0].kills<15))/(player[0].kills+1)):
         timer[0] = 0
-        inimigo.append(criar_inimigo(screen,room,1+((player[0].kills+1)%10==0)))
+        inimigo.append(criar_inimigo(screen,room,1+((player[0].kills+1)%10==0)+(2*(player[0].kills%7==6))))
 
     for enem in inimigo:
         spd = enem.spd*(1-0.29*(enem.xspeed>0 and enem.yspeed>0))
@@ -119,7 +119,6 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
             if sqrt((enem.x-player[0].x)**2+(enem.y-player[0].y)**2)-enem.wait*50 >= enem.radio or (enem.x>=screen.width-100):
                 enem.wait = 0
                 enem.x += enem.xspeed*screen.delta_time()
-                enem.y += enem.yspeed*screen.delta_time()
             else:
                 enem.wait = 2
                 enem.timer -= screen.delta_time()
@@ -236,7 +235,7 @@ def Scr_enemprojeteis(enem,enemprojeteis,player,screen,enemmatriz):
         p.y+=p.yspeed*screen.delta_time()
         if p.collided(player) and player.hp == player.hpcor:
             player.hp -= p.dano
-            enemprojeteis.remove(p)
+            if p.type != 3: enemprojeteis.remove(p)
 
         if p.type == 3:
             if encontrar(enemmatriz,p.enem) == 0:

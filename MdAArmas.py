@@ -80,13 +80,13 @@ def criar_bala(hand,projetil,mouse):
 
     if hand.name == "arco":
         bala = Animation("MdASprites/flechas.png",8)
-        bala.set_total_duration(10000)
+        bala.set_total_duration(400)
         bala.name = "flecha"
         bala.dano = 0.25
 
         bala.ant = 1
 
-        bala.hp = 5
+        bala.hp = 1
         bala.launch = 0
         bala.hand = hand.hand
         bala.spd = 0
@@ -219,16 +219,16 @@ def weapons(player,hand,armas,screen,mouse):
                 arma.update()
 
                 if arma.hp <= 0:
+                    arma.set_total_duration(65)
                     arma.launch = 2
-                    arma.yspeed = -100
+                    arma.yspeed = -250
                     arma.xspeed = -100
 
             else:
-                arma.set_total_duration(250)
 
                 arma.x += arma.xspeed*screen.delta_time()
                 arma.y += arma.yspeed*screen.delta_time()
-                arma.yspeed+=1.9*60*screen.delta_time()
+                arma.yspeed+=8*60*screen.delta_time()
                 
                 if arma.y >= screen.height+50:
                     armas.remove(arma)
