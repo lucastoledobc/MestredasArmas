@@ -26,8 +26,8 @@ def criar_player(screen):
     player.xspeed = 0
     player.yspeed = 0
 
-    hand1 = Animation("MdASprites/sword.png",1,False)
-    hand1.name = "picareta"
+    hand1 = Animation("MdASprites/Machado.png",1,False)
+    hand1.name = "machado"
     hand1.cooldown = 1
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)
@@ -58,6 +58,9 @@ def ataque(hand,projetil,mouse):
         criar_espada(hand,projetil)
 
     if hand.name == "picareta":
+        criar_espada(hand,projetil)
+
+    if hand.name == "machado":
         criar_espada(hand,projetil)
         
 

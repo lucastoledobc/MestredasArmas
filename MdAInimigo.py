@@ -147,6 +147,13 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                 if p.name == "bala":    
                     projeteis.remove(p)
                     dano(enem,p)
+                if p.name == "fogo" and lança_chamas == 0:
+                        lança_chamas = 1 
+                        dano(enem,p)
+                if p.name == "flecha":
+                    if p.launch == 1:
+                        p.hp-=enem.hp
+                        dano(enem,p)
                 if p.name == "sword":    
                     if encontrar(p.acertados,enem) == 0:
                         dano(enem,p)
@@ -155,13 +162,10 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     if encontrar(p.acertados,enem) == 0:
                         dano(enem,p,"rock")
                         p.acertados.append(enem)
-                if p.name == "fogo" and lança_chamas == 0:
-                        lança_chamas = 1 
-                        dano(enem,p)
-                if p.name == "flecha":
-                    if p.launch == 1:
-                        p.hp-=enem.hp
-                        dano(enem,p)
+                if p.name == "machado":    
+                    if encontrar(p.acertados,enem) == 0:
+                        dano(enem,p,"grass")
+                        p.acertados.append(enem)
 
         if enem.hp <= 0 and enem.type != 0:
                 

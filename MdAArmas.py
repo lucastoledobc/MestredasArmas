@@ -129,6 +129,23 @@ def criar_espada(hand,armas):
 
         armas.append(sword)
 
+    if hand.name == "machado":
+        sword = Animation("MdASprites/Machado anim.png",4,True)
+        sword.set_total_duration(1000/4)
+
+        sword.xspeed,sword.yspeed = 0,0
+
+        hand.cooldown = 1.8
+
+        sword.name = hand.name
+        sword.hand = hand.hand
+        sword.hp = 3
+        sword.hpcor = sword.hp
+        sword.dano = 3
+        sword.acertados = []
+
+        armas.append(sword)
+
 def weapons(player,hand,armas,screen,mouse):
     for arma in armas:
         if arma.name == "bala":
@@ -163,6 +180,26 @@ def weapons(player,hand,armas,screen,mouse):
             arma.draw()
             arma.update()
 
+        if arma.name == "machado":
+
+            n = arma.hand
+            arma.x = player.x+player.width/2 - arma.width/2
+            arma.y = player.y+player.height*2/3- arma.height/2
+
+            hand[n].hide()
+
+            arma.hp -= 3*screen.delta_time()
+
+            if arma.hpcor > ceil(arma.hp):
+                arma.hpcor -= 1
+                arma.acertados = []
+            
+            if arma.hp <= 0:
+                    armas.remove(arma)
+                    hand[n].unhide()
+            arma.draw()
+            arma.update()
+
         if arma.name == "fogo":
             arma.dano = 6*screen.delta_time()
             arma.hp -= screen.delta_time()
@@ -176,7 +213,7 @@ def weapons(player,hand,armas,screen,mouse):
                 armas.remove(arma)
 
         if arma.name == "flecha":
-
+            
             arma.draw()
             arma.update()
 
@@ -190,12 +227,13 @@ def weapons(player,hand,armas,screen,mouse):
 
                 arma.spd = min(arma.spd+2*screen.delta_time(),3)
                 if arma.spd == 3:
-                    print(arma.name)
 
                     dx = arma.x - mouse.get_position()[0] + random.randint(-10,10)
                     dy = arma.y - mouse.get_position()[1] + random.randint(-10,10)
 
                     dist = sqrt(dx**2+dy**2)
+
+                    arma.dx, arma.dy = -dx, -dy
 
                     dx/=-dist
                     dy/=-dist    
@@ -210,7 +248,7 @@ def weapons(player,hand,armas,screen,mouse):
 
             elif arma.launch == 1:
                 
-                arma.curr_frame = 0
+                arma.curr_frame = flecha(arma)
 
                 arma.x += arma.xspeed*screen.delta_time()
                 arma.y += arma.yspeed*screen.delta_time()
@@ -234,5 +272,16 @@ def weapons(player,hand,armas,screen,mouse):
                     armas.remove(arma)
 
             
+
+def flecha(arma):
+
+    x = arma.dx
+    y = arma.dy
+
+    arctan = atan(y/(abs(x)+(x==0)))
+    
+    if (-pi/2) <= arctan < (-pi/4): return 2
+    elif arctan < (pi/4): return 0 + 4*(x<0)
+    else: return 6
 
 
