@@ -39,6 +39,7 @@ def criar_inimigo(screen,room,type=1):
         inimigo = Animation("MdASprites/ENEMIES/Jones.png",4,True)
         inimigo.set_total_duration(1000)
 
+        inimigo.dano = 1
         inimigo.x = screen.width
         inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
         inimigo.especie = "rock"
@@ -55,6 +56,7 @@ def criar_inimigo(screen,room,type=1):
         inimigo = Animation("MdASprites/ENEMIES/Inimigo2.png",13,True)
         inimigo.set_total_duration(3000)
 
+        inimigo.dano = 1
         inimigo.x = screen.width
         inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
         inimigo.especie = "rock"
@@ -77,6 +79,7 @@ def criar_inimigo(screen,room,type=1):
         inimigo.x = screen.width
         inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
 
+        inimigo.dano = 1
         inimigo.especie = "rock"
         inimigo.hp = 4
         inimigo.defesa = 1
@@ -87,15 +90,42 @@ def criar_inimigo(screen,room,type=1):
         inimigo.xspeed = 0
         inimigo.yspeed = 0
 
+    if type == 4:
+
+        inimigo = Animation("MdASprites/ENEMIES/Inimigo4.png",1,False)
+        inimigo.set_total_duration(1000)
+
+        inimigo.x = screen.width
+        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
+
+        inimigo.dano = 2
+        inimigo.especie = "rock"
+        inimigo.hp = 10
+        inimigo.defesa = 3
+        inimigo.type = type
+        inimigo.spd = 24
+        inimigo.shake = 0
+        inimigo.yy = inimigo.y
+
+        inimigo.xspeed = 0
+        inimigo.yspeed = 0
+
 
 
 
     return inimigo
 
+def seleciona_inimigos(inteiro):
+    if inteiro < 30: return 1
+    elif inteiro < 60: return 2
+    elif inteiro < 90: return 3
+    else: return 4
+
 def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
     if timer[0] >= 3*((16-(15-player[0].kills)*(player[0].kills<15))/(player[0].kills+1)):
         timer[0] = 0
-        inimigo.append(criar_inimigo(screen,room,1+((player[0].kills+1)%10==0)+(2*(player[0].kills%7==6))))
+        t = 1 + ((player[0].kills+1)%10==0)+(2*(player[0].kills%7==6))
+        inimigo.append(criar_inimigo(screen,room,seleciona_inimigos(random.randint(0,100))))
 
     for enem in inimigo:
         spd = enem.spd*(1-0.29*(enem.xspeed>0 and enem.yspeed>0))
@@ -111,6 +141,16 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
         if enem.type == 1:
             enem.x += enem.spd*-3*screen.delta_time()
             enem.y += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
+
+            if enem.x<=-100:
+                inimigo.remove(enem)
+
+        if enem.type == 4:
+            enem.shake += screen.delta_time()
+            enem.x += enem.spd*-1*screen.delta_time()
+            enem.yy += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
+
+            enem.y = enem.yy +15*sin(enem.shake*pi)
 
             if enem.x<=-100:
                 inimigo.remove(enem)
@@ -166,6 +206,10 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     if encontrar(p.acertados,enem) == 0:
                         dano(enem,p,"grass")
                         p.acertados.append(enem)
+                if p.name == "adaga":    
+                    if encontrar(p.acertados,enem) == 0:
+                        dano(enem,p)
+                        p.acertados.append(enem)
 
         if enem.hp <= 0 and enem.type != 0:
                 
@@ -180,7 +224,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
             inimigo.remove(enem)
 
         if enem.collided(player[0]) and enem.type != 0 and player[0].hpcor == player[0].hp:
-            player[0].hp -= 1
+            player[0].hp -= enem.dano
 
     for enem in inimigo:
 

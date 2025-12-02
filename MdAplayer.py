@@ -26,9 +26,9 @@ def criar_player(screen):
     player.xspeed = 0
     player.yspeed = 0
 
-    hand1 = Animation("MdASprites/Machado.png",1,False)
-    hand1.name = "machado"
-    hand1.cooldown = 1
+    hand1 = Animation("MdASprites/adaga.png",1,False)
+    hand1.name = "adaga"
+    hand1.cooldown = 0.3
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)
     hand2.name = "arco"
@@ -57,6 +57,9 @@ def ataque(hand,projetil,mouse):
     if hand.name == "sword":
         criar_espada(hand,projetil)
 
+    if hand.name == "adaga":
+        criar_espada(hand,projetil)
+
     if hand.name == "picareta":
         criar_espada(hand,projetil)
 
@@ -78,20 +81,6 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
 
     player[2].x = player[0].x+30+player[0].width/2-player[2].width/2
     player[2].y = player[0].y+player[0].height/2-player[2].height/2
-
-    if player[0].hp == player[0].hpcor:
-        for p in player:
-            p.draw()
-    
-    else:
-        if player[0].hp + 1 <= player[0].hpcor: player[0].hpcor = player[0].hp + 1
-        player[0].hpcor -= 0.5*screen.delta_time()
-        if player[0].hpcor*100%8<3:
-                for p in player:
-                    p.draw()
-
-        if player[0].hpcor <= player[0].hp: 
-            player[0].hpcor = player[0].hp
     
     if timer[1] < 0:
         screen.draw_text(f"{abs(timer[1]):.2f}",player[1].x+player[1].width/2,player[1].y+player[1].height+20)

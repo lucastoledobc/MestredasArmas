@@ -1,5 +1,6 @@
 from MdAplayer import *
 from MdAInimigo import *
+from MdADraw import *
 from PPlay.window import *
 from PPlay.sprite import *
 from PPlay.gameimage import *
@@ -24,16 +25,18 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
     bg_running(background,screen,player[0],projetil)
 
     bg_draw(screen,background,"floor",player[0])
-    bg_draw(screen,background,"acima",player[0])
+    #bg_draw(screen,background,"acima",player[0])
 
 
 
 
     Scr_player(screen,room,player,timer,mouse,projetil)
 
-    bg_draw(screen,background,"abaixo",player[0])
+    #bg_draw(screen,background,"abaixo",player[0])
 
     Scr_inimigo(screen,room,inimigo,player,timer,projetil,enemprojeteis)
+
+    draw_cena(player,background,inimigo,projetil,enemprojeteis,screen)
 
     scr_mira_running(mira[0],mouse)
 

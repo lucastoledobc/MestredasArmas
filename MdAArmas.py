@@ -114,6 +114,21 @@ def criar_espada(hand,armas):
 
         armas.append(sword)
 
+    if hand.name == "adaga":
+        sword = GameImage("MdASprites/adaga.png")
+
+        sword.xspeed,sword.yspeed = 0,0
+
+        hand.cooldown = 0.7
+
+        sword.name = hand.name
+        sword.hand = hand.hand
+        sword.dano = 2
+        sword.acertados = []
+        sword.xx = 0
+
+        armas.append(sword)
+
     if hand.name == "picareta":
         sword = Animation("MdASprites/sword attack.png",9,False)
         sword.set_total_duration(600)
@@ -152,11 +167,12 @@ def weapons(player,hand,armas,screen,mouse):
             arma.x += arma.xspeed*screen.delta_time()
             arma.y += arma.yspeed*screen.delta_time()
             arma.draw()
+
         if arma.name == "sword":
 
             n = arma.hand
             arma.x = player.x+player.width
-            arma.y = player.y-player.height+arma.height
+            arma.y = player.y+player.height-arma.height
 
             hand[n].hide()
 
@@ -165,6 +181,22 @@ def weapons(player,hand,armas,screen,mouse):
                 hand[n].unhide()
             arma.draw()
             arma.update()
+
+        if arma.name == "adaga":
+
+            n = arma.hand
+            arma.x = player.x+player.width+arma.xx*100
+            arma.y = player.y+player.height-arma.height
+
+            arma.xx += screen.delta_time()*3
+
+            hand[n].hide()
+
+            if arma.xx >= 0.6:
+                armas.remove(arma)
+                hand[n].unhide()
+
+            arma.draw()
         
         if arma.name == "picareta":
 
@@ -240,7 +272,7 @@ def weapons(player,hand,armas,screen,mouse):
 
                     arma.xspeed = (arma.spd**2)*100*dx
                     arma.yspeed = (arma.spd**2)*100*dy
-                    arma.dano = arma.spd**2
+                    arma.dano = arma.spd*2
 
                     arma.launch = 1
                 

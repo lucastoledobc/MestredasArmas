@@ -59,15 +59,20 @@ def running_game_over(screen, room):
             # se não conseguir, x=0
             try:
                 x = int(pygame.key.get_pressed().index(True))   
-                if x > 3 and x < 30 and len(nome)<11:   
+                if x > 3 and x < 30 and len(nome)<21:   
                     nome += chr(x+61)
                     write_time=0
+
             except:
                 x=0
 
             # se apertar backspace, apaga um char
             if pygame.key.get_pressed()[8] and len(nome)>0:
                 nome=nome[:-1]
+                write_time=0
+            
+            if teclado.key_pressed('SPACE') and len(nome)<21:
+                nome += "_"
                 write_time=0
 
         # se apertar enter, adiciona novo jogador a lista
