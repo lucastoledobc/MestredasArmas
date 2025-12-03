@@ -36,7 +36,7 @@ def criar_inimigo(screen,room,type=1):
         inimigo.spd = 0
 
     if type == 1:
-        inimigo = Animation("MdASprites/ENEMIES/Jones.png",4,True)
+        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo1.png",4,True)
         inimigo.set_total_duration(1000)
 
         inimigo.dano = 1
@@ -53,7 +53,7 @@ def criar_inimigo(screen,room,type=1):
     
     if type == 2:
 
-        inimigo = Animation("MdASprites/ENEMIES/Inimigo2.png",13,True)
+        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo2.png",13,True)
         inimigo.set_total_duration(3000)
 
         inimigo.dano = 1
@@ -73,7 +73,7 @@ def criar_inimigo(screen,room,type=1):
 
     if type == 3:
 
-        inimigo = Animation("MdASprites/ENEMIES/Inimigo3.png",12,True)
+        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo3.png",12,True)
         inimigo.set_total_duration(1000)
 
         inimigo.x = screen.width
@@ -92,7 +92,7 @@ def criar_inimigo(screen,room,type=1):
 
     if type == 4:
 
-        inimigo = Animation("MdASprites/ENEMIES/Inimigo4.png",1,False)
+        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo4.png",1,False)
         inimigo.set_total_duration(1000)
 
         inimigo.x = screen.width
@@ -235,7 +235,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
 def criar_enemprojeteis(enem,enemprojeteis,player):
    
     if enem.type == 2:
-        p = Animation("MdASprites/ENEMIES/Inimigo2projétil.png",4)
+        p = Animation("MdASprites/ENEMIES/Rock/Inimigo2projétil.png",4)
         p.set_total_duration(1000)
 
         p.dano = 1
@@ -260,7 +260,7 @@ def criar_enemprojeteis(enem,enemprojeteis,player):
         enemprojeteis.append(p)
 
     if enem.type == 3:
-        p = Animation("MdASprites/ENEMIES/Inimigo3projétil.png",12)
+        p = Animation("MdASprites/ENEMIES/Rock/Inimigo3projétil.png",12)
         p.set_total_duration(1000)
 
         p.dano = 2
