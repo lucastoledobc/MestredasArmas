@@ -118,4 +118,21 @@ def running_menu(room):
             screen.close()
             # fecha a janela
 
-        screen.update() 
+        screen.update()
+
+
+def running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira):
+    # título e botões
+    bjoga = Sprite("MdASprites/Menu/bjoga.png")
+    bjoga.set_position(int(screen.width)-bjoga.width-40, screen.height-bjoga.height-40)
+
+    while room[1] == False:
+        screen.set_background_color([0, 0, 0])
+        screen.draw_text("Seleção de armas:", 20, 20, 50, (255,255,255))
+
+        bjoga.draw()
+
+        if mouse.is_button_pressed(1) and mouse.is_over_object(bjoga):
+            room[1] = True
+            
+        screen.update()

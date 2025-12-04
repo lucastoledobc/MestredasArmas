@@ -17,7 +17,7 @@ screen = Window(1280,720)
 screen.set_title("Mestre das Armas")
 entrar = True
 
-running = [True, False]
+running = [True]
 
 while running[0]:
     if room[0] == "Menu":
@@ -35,8 +35,8 @@ while running[0]:
             enemprojeteis = []
             mira = [scr_mira(mouse)]
 
-        if running[1] == False:
-            running[1] = True
+        if room[1] == False:
+            running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira)
         else:
             running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira)
 

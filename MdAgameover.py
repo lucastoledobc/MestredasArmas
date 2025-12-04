@@ -37,7 +37,7 @@ def running_game_over(screen, room):
         scores.append(player)    
     
     # agora verifica se o jogador fez mais pontos que o último colocado
-    if room[1] > scores[4]["score"]:
+    if room[2] > scores[4]["score"]:
         loop_rank=True
         nome=''
         write_time = 0
@@ -45,7 +45,7 @@ def running_game_over(screen, room):
     while loop_rank:
         # desenho do fundo, título e botões
         screen.set_background_color(cor0)
-        newrec.draw()        
+        newrec.draw()
         screen.draw_text("Digite seu nome e aperte enter para salvar:",(screen.width)*1/4, 150, 30, cor1)
 
         # Escreve na tela o que a pessoa digita
@@ -78,7 +78,7 @@ def running_game_over(screen, room):
         # se apertar enter, adiciona novo jogador a lista
         if pygame.key.get_pressed()[pygame.K_RETURN]:
             # cria uma biblioteca com nome, score e data e adiciona ao array de scores
-            score_novo = {"nome": nome, "score": int(room[1])}
+            score_novo = {"nome": nome, "score": int(room[2])}
             scores.append(score_novo)
 
             # ordena

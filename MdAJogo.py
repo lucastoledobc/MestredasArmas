@@ -43,4 +43,4 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     if player[0].hp <= 0:
         room[0] = "GAME OVER"
-        room[1] = player[0].kills*100
+        room[2] = player[0].kills*100
