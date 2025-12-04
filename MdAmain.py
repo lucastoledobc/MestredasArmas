@@ -11,7 +11,7 @@ def final():
 
     screen.update()
 
-room = ["Menu", 0]
+room = ["Menu", False, 0]
 
 screen = Window(1280,720)
 screen.set_title("Mestre das Armas")
