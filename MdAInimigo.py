@@ -192,6 +192,9 @@ def criar_inimigo(screen,room,type=1,scene = 'forest'):
             inimigo.yy = inimigo.y
             inimigo.z = 0
             inimigo.spawn = 0
+            inimigo.minxspeed = random.randint(200,350)
+            inimigo.minyspeed = random.randint(180,240)
+            inimigo.chupa = 0
 
             inimigo.xspeed = 0
             inimigo.yspeed = 0
@@ -225,13 +228,18 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
 
         if enem.especie == 'rock':
             if enem.type == 1:
+                enem.yspeed = sign(player[0].y+player[0].height-enem.height - enem.y)*enem.spd if abs(player[0].y+player[0].height-enem.height - enem.y) > 3 else 0
+
                 enem.x += enem.spd*-3*screen.delta_time()
                 enem.y += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
+
+
 
                 if enem.x<=-100:
                     inimigo.remove(enem)
 
             if enem.type == 2:
+                enem.xspeed = -enem.spd
                 if sqrt((enem.x-player[0].x)**2+(enem.y-player[0].y)**2)-enem.wait*50 >= enem.radio or (enem.x>=screen.width-100):
                     enem.wait = 0
                     enem.x += enem.xspeed*screen.delta_time()
@@ -250,6 +258,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     enem.rocknroll = 1
 
             if enem.type == 4:
+                enem.yspeed = sign(player[0].y+player[0].height-enem.height - enem.y)*enem.spd if abs(player[0].y+player[0].height-enem.height - enem.y) > 3 else 0
                 enem.shake += screen.delta_time()
                 enem.x += enem.spd*-1*screen.delta_time()
                 enem.yy += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
@@ -332,14 +341,30 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                         a = (criar_inimigo(screen,room,4,'forest'))
                         a.curr_frame += random.randint(1,5)
                         a.x, a.y = a.x+random.randint(-20,20)+i*a.width,a.y+random.randint(-20,20)
+                        a.yy = a.y
                         a.spawn = 1
                         inimigo.append(a)
                         
                     enem.spawn = 1
 
-                enem.yspeed = sign(player[0].y+player[0].height/1.5-enem.y)*random.randint(200,300)
-                enem.x += sign(player[0].x-enem.x)*screen.delta_time()*random.randint(200,300)
-                enem.y += enem.yspeed*screen.delta_time()+random.randint(-5,5)
+                
+                enem.x += enem.xspeed*screen.delta_time()
+                enem.y += enem.yspeed*screen.delta_time()
+
+                enem.yspeed = min(abs(enem.yspeed),enem.minyspeed)*sign(enem.yspeed)
+                enem.xspeed = min(abs(enem.xspeed),enem.minxspeed)*sign(enem.xspeed)
+
+                enem.xspeed += sign(player[0].x+player[0].width-enem.width-enem.x)*3
+                enem.yspeed += sign(player[0].y+player[0].height-enem.height-enem.y)
+
+                
+                if enem.collided(player[0]):
+                        enem.chupa += screen.delta_time()
+
+                        if enem.chupa >= 1:
+                            enem.chupa = 0
+                            if player[0].hp == player[0].hpcor:
+                                player[0].hp-=1
 
                             
 
@@ -427,8 +452,8 @@ def criar_enemprojeteis(enem,enemprojeteis,player):
             dx/=-dist
             dy/=-dist
 
-            p.xspeed = 300*dx
-            p.yspeed = 300*dy
+            p.xspeed = 450*dx
+            p.yspeed = 450*dy
 
             enemprojeteis.append(p)
 
