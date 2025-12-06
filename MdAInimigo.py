@@ -17,7 +17,7 @@ def encontrar(lista,quero):
             return 1
     return 0
 
-def criar_inimigo(screen,room,type=1):
+def criar_inimigo(screen,room,type=1,scene = 'forest'):
 
     if type == 0:
         inimigo = Animation("MdASprites/ENEMIES/InimigoD.png",4,True)
@@ -35,80 +35,127 @@ def criar_inimigo(screen,room,type=1):
         inimigo.type = 0
         inimigo.spd = 0
 
-    if type == 1:
-        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo1.png",4,True)
-        inimigo.set_total_duration(1000)
+    if scene == 'rock':
+        if type == 1:
+            inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo1.png",4,True)
+            inimigo.set_total_duration(1000)
 
-        inimigo.dano = 1
-        inimigo.x = screen.width
-        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
-        inimigo.especie = "rock"
-        inimigo.hp = 4
-        inimigo.defesa = random.randint(0,10)//10
-        inimigo.type = 1
-        inimigo.spd = 100
+            inimigo.dano = 1
+            inimigo.x = screen.width
+            inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
+            inimigo.especie = "rock"
+            inimigo.hp = 4
+            inimigo.defesa = random.randint(0,10)//10
+            inimigo.type = 1
+            inimigo.spd = 100
 
-        inimigo.xspeed = 0
-        inimigo.yspeed = 0
+            inimigo.xspeed = 0
+            inimigo.yspeed = 0
+        
+        if type == 2:
+
+            inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo2.png",13,True)
+            inimigo.set_total_duration(3000)
+
+            inimigo.dano = 1
+            inimigo.x = screen.width
+            inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
+            inimigo.especie = "rock"
+            inimigo.hp = 2
+            inimigo.defesa = random.randint(0,10)//10
+            inimigo.type = 2
+            inimigo.spd = 100
+            inimigo.timer = 0
+            inimigo.radio = 500
+            inimigo.wait = 0
+
+            inimigo.xspeed = 0
+            inimigo.yspeed = 0
+
+        if type == 3:
+
+            inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo3.png",12,True)
+            inimigo.set_total_duration(1000)
+
+            inimigo.x = screen.width
+            inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
+
+            inimigo.dano = 1
+            inimigo.especie = "rock"
+            inimigo.hp = 4
+            inimigo.defesa = 1
+            inimigo.type = 3
+            inimigo.spd = SPD_BACKGROUND
+            inimigo.rocknroll = 0
+
+            inimigo.xspeed = 0
+            inimigo.yspeed = 0
+
+        if type == 4:
+
+            inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo4.png",1,False)
+            inimigo.set_total_duration(1000)
+
+            inimigo.x = screen.width
+            inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
+
+            inimigo.dano = 2
+            inimigo.especie = "rock"
+            inimigo.hp = 10
+            inimigo.defesa = 3
+            inimigo.type = type
+            inimigo.spd = 24
+            inimigo.shake = 0
+            inimigo.yy = inimigo.y
+            inimigo.xx = inimigo.x
+
+            inimigo.xspeed = 0
+            inimigo.yspeed = 0
+
     
-    if type == 2:
+    if scene == 'forest':
+        if type == 1:
+            inimigo = Animation("MdASprites/ENEMIES/Forest/Inimigo1.png",2,True)
+            inimigo.stop()
 
-        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo2.png",13,True)
-        inimigo.set_total_duration(3000)
+            inimigo.dano = 2
+            inimigo.timer = 0
+            inimigo.cooldown = random.randint(1,3)
+            inimigo.x = screen.width
+            inimigo.y = TOP_TELA+random.randint(1,3)*(140)-inimigo.height
+            inimigo.especie = "forest"
+            inimigo.hp = 3
+            inimigo.defesa = random.randint(0,10)//10
+            inimigo.type = type
+            inimigo.spd = 100
+            inimigo.yy = inimigo.y
+            inimigo.z = inimigo.y
 
-        inimigo.dano = 1
-        inimigo.x = screen.width
-        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
-        inimigo.especie = "rock"
-        inimigo.hp = 2
-        inimigo.defesa = random.randint(0,10)//10
-        inimigo.type = 2
-        inimigo.spd = 100
-        inimigo.timer = 0
-        inimigo.radio = 500
-        inimigo.wait = 0
+            inimigo.xspeed = 0
+            inimigo.yspeed = 0
+            
+        if type == 2:
+            inimigo = Animation("MdASprites/ENEMIES/Forest/Inimigo2.png",6,False)
+            inimigo.set_total_duration(250)
+            inimigo.stop()
 
-        inimigo.xspeed = 0
-        inimigo.yspeed = 0
+            inimigo.dano = 0
+            inimigo.timer = 0
+            inimigo.cooldown = random.randint(3,5)
+            inimigo.x = screen.width
+            inimigo.y = TOP_TELA+random.randint(1,5)*(440/5)-inimigo.height
+            inimigo.especie = "forest"
+            inimigo.hp = 3
+            inimigo.defesa = random.randint(0,10)//10
+            inimigo.type = type
+            inimigo.spd = 100
+            inimigo.xx = inimigo.x
+            inimigo.yy = inimigo.y
+            inimigo.z = [0,1]
+            inimigo.magic = 0
 
-    if type == 3:
-
-        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo3.png",12,True)
-        inimigo.set_total_duration(1000)
-
-        inimigo.x = screen.width
-        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
-
-        inimigo.dano = 1
-        inimigo.especie = "rock"
-        inimigo.hp = 4
-        inimigo.defesa = 1
-        inimigo.type = 3
-        inimigo.spd = SPD_BACKGROUND
-        inimigo.rocknroll = 0
-
-        inimigo.xspeed = 0
-        inimigo.yspeed = 0
-
-    if type == 4:
-
-        inimigo = Animation("MdASprites/ENEMIES/Rock/Inimigo4.png",1,False)
-        inimigo.set_total_duration(1000)
-
-        inimigo.x = screen.width
-        inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
-
-        inimigo.dano = 2
-        inimigo.especie = "rock"
-        inimigo.hp = 10
-        inimigo.defesa = 3
-        inimigo.type = type
-        inimigo.spd = 24
-        inimigo.shake = 0
-        inimigo.yy = inimigo.y
-
-        inimigo.xspeed = 0
-        inimigo.yspeed = 0
+            inimigo.xspeed = 0
+            inimigo.yspeed = 0
 
 
 
@@ -122,10 +169,13 @@ def seleciona_inimigos(inteiro):
     else: return 4
 
 def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
+
+    w = seleciona_inimigos(random.randint(0,100))
+
     if timer[0] >= 3*((16-(15-player[0].kills)*(player[0].kills<15))/(player[0].kills+1)):
         timer[0] = 0
         t = 1 + ((player[0].kills+1)%10==0)+(2*(player[0].kills%7==6))
-        inimigo.append(criar_inimigo(screen,room,seleciona_inimigos(random.randint(0,100))))
+        inimigo.append(criar_inimigo(screen,room,2))
 
     for enem in inimigo:
         spd = enem.spd*(1-0.29*(enem.xspeed>0 and enem.yspeed>0))
@@ -138,40 +188,102 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
             enem.x -= SPD_BACKGROUND*screen.delta_time()
             enem.y -= 360*screen.delta_time()
 
-        if enem.type == 1:
-            enem.x += enem.spd*-3*screen.delta_time()
-            enem.y += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
+        if enem.especie == 'rock':
+            if enem.type == 1:
+                enem.x += enem.spd*-3*screen.delta_time()
+                enem.y += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
 
-            if enem.x<=-100:
-                inimigo.remove(enem)
+                if enem.x<=-100:
+                    inimigo.remove(enem)
 
-        if enem.type == 4:
-            enem.shake += screen.delta_time()
-            enem.x += enem.spd*-1*screen.delta_time()
-            enem.yy += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
+            if enem.type == 2:
+                if sqrt((enem.x-player[0].x)**2+(enem.y-player[0].y)**2)-enem.wait*50 >= enem.radio or (enem.x>=screen.width-100):
+                    enem.wait = 0
+                    enem.x += enem.xspeed*screen.delta_time()
+                else:
+                    enem.wait = 2
+                    enem.timer -= screen.delta_time()
+                    if enem.timer <= -2.5:
+                        criar_enemprojeteis(enem,enemprojeteis,player[0])
+                        enem.timer = 0
 
-            enem.y = enem.yy +15*sin(enem.shake*pi)
+            if enem.type == 3:
+                enem.x -= enem.spd*screen.delta_time()
 
-            if enem.x<=-100:
-                inimigo.remove(enem)
+                if enem.rocknroll == 0:
+                    criar_enemprojeteis(enem,enemprojeteis,player)
+                    enem.rocknroll = 1
 
-        if enem.type == 2:
-            if sqrt((enem.x-player[0].x)**2+(enem.y-player[0].y)**2)-enem.wait*50 >= enem.radio or (enem.x>=screen.width-100):
-                enem.wait = 0
-                enem.x += enem.xspeed*screen.delta_time()
-            else:
-                enem.wait = 2
-                enem.timer -= screen.delta_time()
-                if enem.timer <= -4:
-                    criar_enemprojeteis(enem,enemprojeteis,player[0])
+            if enem.type == 4:
+                enem.shake += screen.delta_time()
+                enem.x += enem.spd*-1*screen.delta_time()
+                enem.yy += enem.yspeed*screen.delta_time()*(enem.x>player[0].x)
+
+                enem.y = enem.yy +15*sin(enem.shake*pi)
+
+                if enem.x<=-100:
+                    inimigo.remove(enem)
+
+        if enem.especie == 'forest':
+            if enem.type == 1:
+                enem.timer += screen.delta_time()
+
+                if enem.timer >= enem.cooldown:
+                    enem.cooldown = random.randint(3,5)/2
                     enem.timer = 0
+                    while enem.yy == enem.y:
+                        enem.yy = TOP_TELA+random.randint(1,3)*(140)-enem.height
+                    enem.jump = enem.yy-enem.y
+                    enem.jumpforce = abs(enem.jump)/140*80
 
-        if enem.type == 3:
-            enem.x -= enem.spd*screen.delta_time()
+                if enem.y != enem.yy:
+                    enem.z += sign(enem.yy-enem.z)*screen.delta_time()*240
+                    z = (enem.yy-enem.z)/enem.jump
+                    enem.y = enem.z - sin(pi*z)*enem.jumpforce
+                    if abs(enem.z-enem.yy) <= 10: enem.y = enem.yy
+                    enem.x -= 200*screen.delta_time()
 
-            if enem.rocknroll == 0:
-                criar_enemprojeteis(enem,enemprojeteis,player)
-                enem.rocknroll = 1
+
+                enem.curr_frame = (enem.y != enem.yy)
+
+                enem.x -= (SPD_BACKGROUND)*screen.delta_time()
+
+                if enem.x<=-100:
+                    inimigo.remove(enem)
+
+            if enem.type == 2:
+                enem.timer += screen.delta_time()
+                if enem.timer < enem.cooldown or enem.z[0] != 15:
+                    enem.xx -= SPD_BACKGROUND*(enem.xx>1000)*screen.delta_time()
+                    enem.z[0] += 30*enem.z[1]*screen.delta_time()
+                    if enem.z[0]<=0: enem.z[1] = 1
+                    if enem.z[0]>=30: enem.z[1] = -1
+
+                    enem.curr_frame = enem.z[0]//10 if enem.z[0] < 30 else 2
+
+                    enem.x = enem.xx + enem.z[0]*3
+                    enem.y = enem.yy - 80*sin(pi*enem.z[0]/30)
+
+                if enem.timer >= enem.cooldown:
+                    if abs(enem.z[0]-15) <= 1:
+                        enem.z[0] = 15
+
+                        if enem.curr_frame < 3:
+                            enem.curr_frame = 3
+                            enem.play()
+
+                        if enem.curr_frame == 5 and enem.magic == 0:
+                            for i in range(3):
+                                enem.p = i
+                                criar_enemprojeteis(enem,enemprojeteis,player)
+                            enem.magic = 1
+
+                        if enem.timer > enem.cooldown + 2:
+                            inimigo.remove(enem)
+                            
+
+                    
+
 
         Scr_enemprojeteis(enem,enemprojeteis,player[0],screen,inimigo)    
 
@@ -233,48 +345,66 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
 
 
 def criar_enemprojeteis(enem,enemprojeteis,player):
-   
-    if enem.type == 2:
-        p = Animation("MdASprites/ENEMIES/Rock/Inimigo2projétil.png",4)
-        p.set_total_duration(1000)
+    if enem.especie == 'rock':
+        if enem.type == 2:
+            p = Animation("MdASprites/ENEMIES/Rock/Inimigo2projétil.png",4)
+            p.set_total_duration(1000)
 
-        p.dano = 1
-        p.x = enem.x+enem.width/2
-        p.y = enem.y+enem.height/2
-        p.type = enem.type
+            p.dano = 1
+            p.x = enem.x+enem.width/2
+            p.y = enem.y+enem.height/2
+            p.type = enem.type
 
-        x = player.x+player.width/2
-        y = player.y+player.height/2
+            x = player.x+player.width/2
+            y = player.y+player.height/2
 
-        dx = p.x - x
-        dy = p.y - y
+            dx = p.x - x
+            dy = p.y - y
 
-        dist = sqrt(dx**2+dy**2)
+            dist = sqrt(dx**2+dy**2)
 
-        dx/=-dist
-        dy/=-dist
+            dx/=-dist
+            dy/=-dist
 
-        p.xspeed = 200*dx
-        p.yspeed = 200*dy
+            p.xspeed = 200*dx
+            p.yspeed = 200*dy
 
-        enemprojeteis.append(p)
+            enemprojeteis.append(p)
 
-    if enem.type == 3:
-        p = Animation("MdASprites/ENEMIES/Rock/Inimigo3projétil.png",12)
-        p.set_total_duration(1000)
+        if enem.type == 3:
+            p = Animation("MdASprites/ENEMIES/Rock/Inimigo3projétil.png",12)
+            p.set_total_duration(1000)
 
-        p.dano = 2
-        p.type = enem.type
-        p.x = enem.x+enem.width/2-p.width/2
-        p.y = enem.y+enem.height/2 - p.height/2
+            p.dano = 2
+            p.type = enem.type
+            p.x = enem.x+enem.width/2-p.width/2
+            p.y = enem.y+enem.height/2 - p.height/2
 
-        p.enem = enem
+            p.enem = enem
 
-        p.xspeed = -enem.spd
-        p.yspeed = 0
-        
+            p.xspeed = -enem.spd
+            p.yspeed = 0
+            
 
-        enemprojeteis.append(p)
+            enemprojeteis.append(p)
+
+    if enem.especie == 'forest':
+        if enem.type == 2:
+            p = Animation("MdASprites/ENEMIES/Forest/Inimigo2projétil.png",8,True)
+            p.set_total_duration(1000*2/3)
+
+            p.dano = 1
+            p.x = enem.x+enem.width/2
+            p.y = enem.y+enem.height/4
+            p.type = enem.type+4
+
+            p.xspeed = -200
+            if enem.p == 0: p.yspeed = 0
+            if enem.p == 1: p.yspeed = -50
+            if enem.p == 2: p.yspeed = 50
+
+            enemprojeteis.append(p)
+
 
 def Scr_enemprojeteis(enem,enemprojeteis,player,screen,enemmatriz):
 
