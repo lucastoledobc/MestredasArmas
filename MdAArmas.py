@@ -119,7 +119,7 @@ def criar_espada(hand,armas):
 
         sword.xspeed,sword.yspeed = 0,0
 
-        hand.cooldown = 0.7
+        hand.cooldown = 0.5
 
         sword.name = hand.name
         sword.hand = hand.hand
@@ -150,7 +150,7 @@ def criar_espada(hand,armas):
 
         sword.xspeed,sword.yspeed = 0,0
 
-        hand.cooldown = 1.8
+        hand.cooldown = 2.5
 
         sword.name = hand.name
         sword.hand = hand.hand

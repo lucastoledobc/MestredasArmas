@@ -118,14 +118,14 @@ def criar_inimigo(screen,room,type=1,scene = 'forest'):
             inimigo = Animation("MdASprites/ENEMIES/Forest/Inimigo1.png",2,True)
             inimigo.stop()
 
-            inimigo.dano = 2
+            inimigo.dano = 1
             inimigo.timer = 0
             inimigo.cooldown = random.randint(1,3)
             inimigo.x = screen.width
             inimigo.y = TOP_TELA+random.randint(1,3)*(140)-inimigo.height
             inimigo.especie = "forest"
-            inimigo.hp = 3
-            inimigo.defesa = random.randint(0,10)//10
+            inimigo.hp = 5
+            inimigo.defesa = 0
             inimigo.type = type
             inimigo.spd = 100
             inimigo.yy = inimigo.y
@@ -167,7 +167,7 @@ def criar_inimigo(screen,room,type=1,scene = 'forest'):
             inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
             inimigo.especie = "forest"
             inimigo.hp = 10
-            inimigo.defesa = random.randint(0,10)//10
+            inimigo.defesa = 0
             inimigo.type = type
             inimigo.spd = -400
             inimigo.yy = inimigo.y
@@ -186,7 +186,7 @@ def criar_inimigo(screen,room,type=1,scene = 'forest'):
             inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
             inimigo.especie = "forest"
             inimigo.hp = 1
-            inimigo.defesa = random.randint(0,10)//10
+            inimigo.defesa = 0
             inimigo.type = type
             inimigo.spd = -400
             inimigo.yy = inimigo.y
@@ -198,6 +198,9 @@ def criar_inimigo(screen,room,type=1,scene = 'forest'):
 
             inimigo.xspeed = 0
             inimigo.yspeed = 0
+    
+    if scene == 'magma':
+        aaa = 1
 
 
 
@@ -337,7 +340,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
 
             if enem.type == 4:
                 if enem.spawn == 0:
-                    for i in range(9):
+                    for i in range(6):
                         a = (criar_inimigo(screen,room,4,'forest'))
                         a.curr_frame += random.randint(1,5)
                         a.x, a.y = a.x+random.randint(-20,20)+i*a.width,a.y+random.randint(-20,20)
@@ -361,7 +364,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                 if enem.collided(player[0]):
                         enem.chupa += screen.delta_time()
 
-                        if enem.chupa >= 1:
+                        if enem.chupa >= 0.5:
                             enem.chupa = 0
                             if player[0].hp == player[0].hpcor:
                                 player[0].hp-=1
@@ -399,7 +402,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                         p.acertados.append(enem)
                 if p.name == "machado":    
                     if encontrar(p.acertados,enem) == 0:
-                        dano(enem,p,"grass")
+                        dano(enem,p,"forest")
                         p.acertados.append(enem)
                 if p.name == "adaga":    
                     if encontrar(p.acertados,enem) == 0:
@@ -413,7 +416,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
 
                 inimigo.remove(enem)
                 inimigo.append(morto)
-                player[0].kills+=1
+                player[0].kills_type[enem.type-1]+=1
         
         if enem.y <= -100:
             inimigo.remove(enem)

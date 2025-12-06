@@ -22,12 +22,13 @@ def criar_player(screen):
 
     player.hp = 5
     player.kills = 0
+    player.kills_type = [0,0,0,0]
 
     player.xspeed = 0
     player.yspeed = 0
 
     hand1 = Animation("MdASprites/adaga.png",1,False)
-    hand1.name = "adaga"
+    hand1.name = "machado"
     hand1.cooldown = 0.3
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)
@@ -145,6 +146,13 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
     for i in range(player[0].hp):
         coração.draw()
         coração.x+=coração.width*1.5
+
+    kills = 0
+    for k in player[0].kills_type:
+        print(k)
+        kills += k
+
+    player[0].kills = kills
 
     screen.draw_text("KILLS: "+str(player[0].kills),50,100,24,[255,255,255])
 
