@@ -21,7 +21,7 @@ running = [True]
 
 while running[0]:
     if room[0] == "Menu":
-        running_menu(room)
+        running_menu(screen, room)
         
     if room[0] == "Jogo":
         if entrar:

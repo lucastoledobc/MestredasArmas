@@ -13,9 +13,9 @@ def running_game_over(screen, room):
     tempo_over = 0
 
     # título
-    newrec = Sprite("MdASprites/Menu/newrec.png")
+    newrec = Sprite("MdASprites/Menu/title_newrec.png")
     newrec.set_position(int(screen.width/2)-newrec.width/2, 50)
-    over = Sprite("MdASprites/Menu/over.png")
+    over = Sprite("MdASprites/Menu/gameover.png")
     over.set_position(int(screen.width/2)-over.width/2, int(screen.height/2-over.height/2))
 
     over.draw()
@@ -46,7 +46,7 @@ def running_game_over(screen, room):
         # desenho do fundo, título e botões
         screen.set_background_color(cor0)
         newrec.draw()
-        screen.draw_text("Digite seu nome e aperte enter para salvar:",(screen.width)*1/4, 150, 30, cor1)
+        screen.draw_text("Digite seu nome e aperte enter para salvar:",(screen.width)*1/4, 250, 30, cor1)
 
         # Escreve na tela o que a pessoa digita
         screen.draw_text("Nome: "+nome, (screen.width)*1/4, screen.height/2, 30, cor1)
@@ -99,7 +99,7 @@ def running_game_over(screen, room):
                     f.write(texto)
             
             # vai para tela de ranking
-            menu_rank()
+            menu_rank(screen)
         
 
         screen.update()
