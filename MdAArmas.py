@@ -166,7 +166,7 @@ def weapons(player,hand,armas,screen,mouse):
         if arma.name == "bala":
             arma.x += arma.xspeed*screen.delta_time()
             arma.y += arma.yspeed*screen.delta_time()
-            arma.draw()
+            
 
         if arma.name == "sword":
 
@@ -179,7 +179,7 @@ def weapons(player,hand,armas,screen,mouse):
             if arma.is_playing() == False:
                 armas.remove(arma)
                 hand[n].unhide()
-            arma.draw()
+
             arma.update()
 
         if arma.name == "adaga":
@@ -195,8 +195,6 @@ def weapons(player,hand,armas,screen,mouse):
             if arma.xx >= 0.6:
                 armas.remove(arma)
                 hand[n].unhide()
-
-            arma.draw()
         
         if arma.name == "picareta":
 
@@ -209,7 +207,7 @@ def weapons(player,hand,armas,screen,mouse):
             if arma.is_playing() == False:
                 armas.remove(arma)
                 hand[n].unhide()
-            arma.draw()
+                
             arma.update()
 
         if arma.name == "machado":
@@ -229,7 +227,6 @@ def weapons(player,hand,armas,screen,mouse):
             if arma.hp <= 0:
                     armas.remove(arma)
                     hand[n].unhide()
-            arma.draw()
             arma.update()
 
         if arma.name == "fogo":
@@ -238,7 +235,6 @@ def weapons(player,hand,armas,screen,mouse):
             arma.x += arma.xspeed*screen.delta_time()
             arma.y += arma.yspeed*screen.delta_time()
 
-            arma.draw()
             arma.update()
 
             if arma.hp <= 0:
@@ -246,7 +242,6 @@ def weapons(player,hand,armas,screen,mouse):
 
         if arma.name == "flecha":
             
-            arma.draw()
             arma.update()
 
             if (arma.launch == 0): 
@@ -285,7 +280,6 @@ def weapons(player,hand,armas,screen,mouse):
                 arma.x += arma.xspeed*screen.delta_time()
                 arma.y += arma.yspeed*screen.delta_time()
 
-                arma.draw()
                 arma.update()
 
                 if arma.hp <= 0:

@@ -62,12 +62,14 @@ def bg_running(background,screen,player,projetil):
     for b in background:
         b.x -= 180*screen.delta_time()
 
-        if b.name != "floor" and abs(b.y+b.height-(player.y+player.height)) <= 14 and player.hp == player.hpcor and b.collided(player):
-            player.hp -= 1
+        if b.name != "floor" and player.hp == player.hpcor:
+            if abs(b.y+b.height-(player.y+player.height)) <= 14 and b.collided(player):
+                player.hp -= 1
 
         for p in projetil:
-            if p.name == "picareta" and abs(p.height+p.y-(b.y+b.height))<=30 and p.collided(b) and b.name == "rock":
-                 background.remove(b)
+            if p.name == "picareta" and abs(p.height+p.y-(b.y+b.height))<=30 and b.name == "rock":
+                if p.collided(b):
+                    background.remove(b)
 
     background[0].timer += screen.delta_time()
 
@@ -85,13 +87,4 @@ def bg_draw(screen,background,typedraw,player):
             b.draw()
             if b.x<=-b.width:
                 b.x+= 3*b.width-1
-
-        if b.name != "floor":
-            if typedraw == "acima" and b.y+b.height<=player.y+player.height:
-                b.draw()
-            if typedraw == "abaixo" and b.y+b.height>player.y+player.height:
-                b.draw()
-            if b.x <= -64:
-                background.remove(b)
-                continuar_bg(screen,background)
 

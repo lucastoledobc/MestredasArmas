@@ -32,7 +32,7 @@ def criar_player(screen):
     hand1.cooldown = 0.3
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)
-    hand2.name = "arco"
+    hand2.name = "metralhadora"
     hand2.munition = 10
     hand2.cooldown = 2
     hand2.hand = 2
@@ -149,7 +149,6 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
 
     kills = 0
     for k in player[0].kills_type:
-        print(k)
         kills += k
 
     player[0].kills = kills
