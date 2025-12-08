@@ -6,6 +6,15 @@ from PPlay.keyboard import *
 from math import *
 import random 
 
+ID_SWORD = 1
+ID_ADAGA = 2
+ID_PICARETA = 3
+ID_MACHADO = 4
+ID_GUN = 5
+ID_ARCO = 6
+ID_METRALHADORA = 7
+ID_LANÇACHAMAS = 8
+
 def criar_bala(hand,projetil,mouse):
     if hand.name == "gun":
         bala = GameImage("MdASprites/bala.png")
