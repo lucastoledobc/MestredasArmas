@@ -168,6 +168,23 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
     bjoga = Sprite("MdASprites/Menu/bjoga.png")
     bjoga.set_position(int(screen.width)-bjoga.width-40, screen.height-bjoga.height-30)
 
+
+    armas = [
+        'adaga',
+        'arco',
+        'machado',
+        'picareta',
+        'sword',
+        'gun',
+        'metralhadora'
+    ]
+    armas_s = []
+
+    for i in range (len(armas)):
+        x = Sprite("MdASprites/Armas/"+str(armas[i])+".png")
+        armas_s.append(x)
+
+
     slots = []
     slots_e = []
     slots_n = 0
@@ -179,13 +196,16 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
         slots.append(item)
         slots_e.append(0)
 
-    for i in range(8):
+    for i in range(len(armas)):
         item = Sprite("MdASprites/Menu/slot0.png")
-        item.set_position(int(screen.width)/2-item.width*23/4+item.width*3/2*i, 450)
+        item.set_position(int(screen.width)/2-(item.width*((len(armas)-1)*3/2)+item.width)/2+item.width*3/2*i, 450)
         slots.append(item)
         slots_e.append(0)
-    
 
+        armas_s[i].set_position(item.x+item.width/2-armas_s[i].width/2, item.y+item.height/2-armas_s[i].height/2)
+    
+    armas_escolhidas = ['','', Sprite, Sprite]
+    
     while room[1] == False:
         screen.set_background_color([0, 0, 0])
 
@@ -196,7 +216,7 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
             item.draw()
         
         time_click += screen.delta_time()
-        for i in range(len(slots)):
+        for i in range(2, len(slots)):
             if mouse.is_over_object(slots[i]):
                 if slots_e[i]==0:
                     x = slots[i].x
@@ -211,6 +231,21 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     slots[i] = Sprite("MdASprites/Menu/slot2.png")
                     slots[i].set_position(x, y)
                     slots_e[i]=2
+
+                    for i2 in range(2):
+                        if armas_escolhidas[i2+2] == Sprite:
+                            x = slots[i2].x
+                            y = slots[i2].y
+                            slots[i2] = Sprite("MdASprites/Menu/slot2.png")
+                            slots[i2].set_position(x, y)
+
+                            armas_escolhidas[i2] = armas[i-2]
+                            z = Sprite("MdASprites/Armas/"+str(armas_escolhidas[i2])+".png")
+                            z.set_position(x+slots[i2].width/2-z.width/2, y+slots[i2].height/2-z.height/2)
+                            armas_escolhidas[i2+2] = z
+
+                            break
+
                     slots_n +=1
                     time_click = 0
 
@@ -220,7 +255,20 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     slots[i] = Sprite("MdASprites/Menu/slot1.png")
                     slots[i].set_position(x, y)
                     slots_e[i]=1
+
                     slots_n -=1
+                    
+                    for i2 in range(2):
+                        if armas_escolhidas[i2] == armas[i-2]:
+                            armas_escolhidas[i2] = ''
+                            armas_escolhidas[i2+2] = Sprite
+
+                            x = slots[i2].x
+                            y = slots[i2].y
+                            slots[i2] = Sprite("MdASprites/Menu/slot0.png")
+                            slots[i2].set_position(x, y)
+                        
+
                     time_click = 0
 
             else:
@@ -232,8 +280,37 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     slots_e[i]=0
 
 
+        for arma in armas_s:
+            arma.draw()
+
+        try:
+            armas_escolhidas[2].draw()
+        except:
+            x=1
+        try:            
+            armas_escolhidas[3].draw()
+        except:
+            x=1
+
 
         if mouse.is_button_pressed(1) and mouse.is_over_object(bjoga):
             room[1] = True
             
+            if armas_escolhidas[0] == '':
+                armas_escolhidas[0] = 'sword'
+            if armas_escolhidas[1] == '':
+                armas_escolhidas[1] = 'gun'
+
+            player[1] = Animation("MdASprites/Armas/"+str(armas_escolhidas[0])+".png",1,False)
+            player[1].name = armas_escolhidas[0]
+            player[1].munition = 10
+            player[1].cooldown = 0.3
+            player[1].hand = 1
+            player[2] = Animation("MdASprites/Armas/"+str(armas_escolhidas[1])+".png",1,False)
+            player[2].name = armas_escolhidas[1]
+            player[2].munition = 10
+            player[2].cooldown = 2
+            player[2].hand = 2
+
+
         screen.update()

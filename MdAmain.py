@@ -11,6 +11,7 @@ def final():
 
     screen.update()
 
+# room [Menu/Jogo/Game Over, Seleção de armas, Pontuação]
 room = ["Menu", False, 0]
 
 screen = Window(1280,720)
