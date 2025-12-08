@@ -178,7 +178,9 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
         'sword',
         'gun',
         'metralhadora',
-        'lança-chamas'
+        'lança-chamas',
+        'rocket-launcher',
+        'punch2'
     ]
     armas_s = []
 
@@ -329,7 +331,7 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     fases_e = i
                     time_click = 0
 
-                else:
+                elif i != fases_e:
                     item = Sprite("MdASprites/Menu/slot11.png")
                     item.set_position(int(screen.width)/2-(item.width*((len(fases)-1)*3/2)+item.width)/2+item.width*3/2*i, 520)
                     fases_m[i] = item
@@ -352,10 +354,14 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
             if armas_escolhidas[1] == '':
                 armas_escolhidas[1] = 'gun'
 
+            if armas_escolhidas[0] == 'punch2':
+                armas_escolhidas[0] = 'punch1'
+
             player[1] = Animation("MdASprites/Armas/"+str(armas_escolhidas[0])+".png",1,False)
             player[1].hand = 1
             player[2] = Animation("MdASprites/Armas/"+str(armas_escolhidas[1])+".png",1,False)
             player[2].hand = 2
+
 
             for i in range(2):
                 if armas_escolhidas[i] == 'adaga':
@@ -386,18 +392,22 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     player[i+1].name = armas_escolhidas[i]
                     player[i+1].munition = 0
                     player[i+1].cooldown = 0.3
+                if armas_escolhidas[i] == 'punch1':
+                    player[i+1].name = 'punch'
+                    player[i+1].munition = 0
+                    player[i+1].cooldown = 1
+                if armas_escolhidas[i] == 'punch2':
+                    player[i+1].name = 'punch'
+                    player[i+1].munition = 0
+                    player[i+1].cooldown = 1
                 if armas_escolhidas[i] == 'sword':
                     player[i+1].name = armas_escolhidas[i]
                     player[i+1].munition = 0
-                    player[i+1].cooldown = 0.
+                    player[i+1].cooldown = 0
                 if armas_escolhidas[i] == 'rocket-launcher':
                     player[i+1].name = armas_escolhidas[i]
                     player[i+1].munition = 0
                     player[i+1].cooldown = 10
-                if armas_escolhidas[i] == f'punch{i+1}':
-                    player[i+1].name = 'punch'
-                    player[i+1].munition = 0
-                    player[i+1].cooldown = 1
 
         fase[0] = fases[fases_e]
 
