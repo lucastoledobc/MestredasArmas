@@ -3,6 +3,7 @@ from PPlay.gameobject import *
 from PPlay.keyboard import *
 from PPlay.animation import *
 from MdAConstantes import *
+from MdAKills import *
 from math import *
 import random
 
@@ -140,8 +141,8 @@ def criar_inimigo(screen,room,player,type=1,scene = 'forest'):
             inimigo.yspeed = 0
             
         if type == 2:
-            inimigo = Animation("MdASprites/ENEMIES/Forest/Inimigo2.png",6,False)
-            inimigo.set_total_duration(250)
+            inimigo = Animation("MdASprites/ENEMIES/Forest/Inimigo2.png",3,False)
+            inimigo.set_total_duration(500)
             inimigo.stop()
 
             inimigo.dano = 0
@@ -241,10 +242,11 @@ def criar_inimigo(screen,room,player,type=1,scene = 'forest'):
             inimigo.x = x - inimigo.width if x == 0 else x
             inimigo.y = player[0].y+player[0].height - inimigo.height
             inimigo.especie = "magma"
-            inimigo.hp = 7
+            inimigo.t = 0
+            inimigo.hp = 5
             inimigo.defesa = 0
             inimigo.type = type
-            inimigo.spd = 300 if x > 0 else -350
+            inimigo.spd = 250 if x > 0 else -350
 
             inimigo.xspeed = 0
             inimigo.yspeed = 0
@@ -295,14 +297,14 @@ def seleciona_inimigos(inteiro):
     elif inteiro < 90: return 3
     else: return 4
 
-def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
+def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis,fase,m):
 
     w = seleciona_inimigos(random.randint(0,100))
 
     if timer[0] >= 3*((16-(15-player[0].kills)*(player[0].kills<15))/(player[0].kills+1)):
         timer[0] = 0
         t = 1 + ((player[0].kills+1)%10==0)+(2*(player[0].kills%7==6))
-        inimigo.append(criar_inimigo(screen,room,player,4,'magma'))
+        inimigo.append(criar_inimigo(screen,room,player,w,fase))
 
     for enem in inimigo:
 
@@ -397,16 +399,38 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                 if enem.timer >= enem.cooldown:
                     if abs(enem.z[0]-15) <= 1:
                         enem.z[0] = 15
+                        if enem.magic == 0:        
+                            p = Animation(f"MdASprites/ENEMIES/Forest/Inimigo2A.png",6,False) 
+                            p.set_total_duration(250)
+                            p.stop()
+
+                            p.dano = 0
+                            p.timer = enem.timer
+                            p.cooldown = enem.cooldown
+                            p.x = enem.x-abs(enem.width-p.width)
+                            p.y = enem.y-abs(enem.height-p.height)
+                            p.especie = "forest"
+                            p.hp = enem.hp
+                            p.defesa = enem.defesa
+                            p.type = enem.type
+                            p.spd = enem.spd
+                            p.xx = enem.xx
+                            p.yy = enem.yy
+                            p.z = enem.z
+                            p.magic = 1
+
+                            inimigo.append(p)
+                            inimigo.remove(enem)
 
                         if enem.curr_frame < 3:
                             enem.curr_frame = 3
                             enem.play()
 
-                        if enem.curr_frame == 5 and enem.magic == 0:
+                        if enem.curr_frame == 5 and enem.magic == 1:
                             for i in range(3):
                                 enem.p = i-(enem.yy==TOP_TELA+(440)-enem.height)+(enem.yy==TOP_TELA+(440/5)-enem.height)
                                 criar_enemprojeteis(enem,enemprojeteis,player)
-                            enem.magic = 1
+                            enem.magic = 2
 
                         if enem.timer > enem.cooldown + 2:
                             inimigo.remove(enem)
@@ -491,6 +515,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     r = 1 + (x==0)
                     e = Animation(f"MdASprites/ENEMIES/Magma/Inimigo2-{r}.png",4,True)
                     e.set_total_duration(1000/2)
+                    e.t = enem.t+1
 
                     e.dano = enem.dano
                     e.r = r
@@ -500,7 +525,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     e.hp = 7
                     e.defesa = 0
                     e.type = 2
-                    e.spd = 300 if x > 0 else -350
+                    e.spd = 250 if x > 0 else -350
 
                     e.xspeed = 0
                     e.yspeed = 0
@@ -508,13 +533,16 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     inimigo.append(e)
                     inimigo.remove(enem)
 
+                if enem.t > 2:
+                    inimigo.remove(enem)
+
 
             if enem.type == 3:
                 enem.x += -enem.spd*screen.delta_time()
                 enem.y += enem.yspeed*screen.delta_time()
 
-                if enem.y+enem.height < TOP_TELA: enem.y = TOP_TELA
-                if enem.y+enem.height > DOWN_TELA: enem.y = DOWN_TELA+enem.height
+                if enem.y+enem.height < TOP_TELA: enem.y = TOP_TELA-enem.height
+                if enem.y+enem.height > DOWN_TELA: enem.y = DOWN_TELA-enem.height
 
                 enem.timer += screen.delta_time()
                 enem.timer2 += screen.delta_time()
@@ -524,7 +552,8 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                     enem.timer2 = 0
                     criar_enemprojeteis(enem,enemprojeteis,player)
 
-                if enem.timer >= 2:
+                if enem.timer >= enem.cooldown:
+                    enem.cooldown = random.randint(1,3)
                     enem.yspeed *= -1
                     enem.timer = 0
 
@@ -536,19 +565,28 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
                         player[0].hp -= 1
                 enem.x += -enem.spd*screen.delta_time()
 
+                try: enem.cooldown = enem.cooldown
+                except: enem.cooldown = random.randint(1,3)
+
+                
+                if enem.curr_frame == 7 and enem.cooldown != 0:
+                        enem.cooldown -= 1
+                        enem.curr_frame = 0
+
                 if enem.curr_frame != 8:
                     enem.eruption = 0
                 elif enem.eruption == 0:
-                    criar_enemprojeteis(enem,enemprojeteis,player)
-                    enem.eruption = 1
+                        criar_enemprojeteis(enem,enemprojeteis,player)
+                        enem.cooldown = random.randint(1,3)
+                        enem.eruption = 1
 
                             
         ###FIM DO COMPORTAMENTO
                    
 
         def dano(enem,p,condicion="none"):
-            if  p.dano-enem.defesa>0:
-                enem.hp -= (p.dano-enem.defesa)*(1+(enem.especie==condicion))
+            if  enem.defesa+1!=0:
+                enem.hp -= (p.dano/(enem.defesa+1))*(1+(enem.especie==condicion))
             else:
                 enem.hp -= min(1,p.dano)
 
@@ -585,7 +623,9 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis):
         if enem.hp <= 0 and enem.type != 0:
                 
                 morto = criar_inimigo(screen,room,player,0)
-                morto.x, morto.y = enem.x, enem.y
+                morto.x, morto.y = enem.x+enem.width/2-morto.width/2, enem.y+enem.height/2-morto.height/2
+
+                criar_pedaços(enem,m)
 
                 inimigo.remove(enem)
                 inimigo.append(morto)
@@ -711,10 +751,19 @@ def Scr_enemprojeteis(enemprojeteis,player,screen,enemmatriz):
     for p in enemprojeteis:
         p.x+=p.xspeed*screen.delta_time()
         p.y+=p.yspeed*screen.delta_time()
+
+        if p.type == 12 and p.y<-p.width*3:
+            p.yspeed *= -1
+            p.y = -p.width*3
+            p.x = player.x+SPD_BACKGROUND
         if player.hp == player.hpcor:
             if p.collided(player):
-                player.hp -= p.dano
-                if p.type != 3: enemprojeteis.remove(p)
+                if p.type != 12:
+                    player.hp -= p.dano
+                    if p.type != 3: enemprojeteis.remove(p)
+                elif p.yspeed > 0:
+                    player.hp -= p.dano
+                    enemprojeteis.remove(p)
 
         if p.type == 3:
             if encontrar(enemmatriz,p.enem) == 0:

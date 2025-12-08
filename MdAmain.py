@@ -33,12 +33,13 @@ while running[0]:
             entrar = False
             background = []
             enemprojeteis = []
+            morto = []
             mira = [scr_mira(mouse)]
 
         if room[1] == False:
             running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira)
         else:
-            running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira)
+            running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto)
 
         final()
 

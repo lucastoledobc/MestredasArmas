@@ -27,7 +27,7 @@ def criar_player(screen):
     player.xspeed = 0
     player.yspeed = 0
 
-    hand1 = Animation("MdASprites/adaga.png",1,False)
+    hand1 = Animation("MdASprites/sword.png",1,False)
     hand1.name = "machado"
     hand1.cooldown = 0.3
     hand1.hand = 1
@@ -94,7 +94,7 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
     for i in range(2):
         if player[1+i].name == "metralhadora" or player[1+i].name == "lança-chamas":
             if player[1+i].munition<10:
-                player[1+i].munition += screen.delta_time()*1.33
+                player[1+i].munition += screen.delta_time()*1.5 if player[1+i].name == "metralhadora" else screen.delta_time()*1.33
 
             else:
                 player[1+i].munition = 10

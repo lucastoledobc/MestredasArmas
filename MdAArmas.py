@@ -9,6 +9,8 @@ import random
 def criar_bala(hand,projetil,mouse):
     if hand.name == "gun":
         bala = GameImage("MdASprites/bala.png")
+        bala.x = -bala.width*2
+        bala.y = -bala.height*2
         bala.name = "bala"
         bala.dano = 2
 
@@ -29,6 +31,8 @@ def criar_bala(hand,projetil,mouse):
         projetil.append(bala)
     if hand.name == "metralhadora":
         bala = GameImage("MdASprites/balam.png")
+        bala.x = -bala.width*2
+        bala.y = -bala.height*2
         bala.name = "bala"
         bala.dano = 0.75
 
@@ -52,6 +56,8 @@ def criar_bala(hand,projetil,mouse):
         projetil.append(bala)
     if hand.name == "lança-chamas":
         bala = Animation("MdASprites/Fosgo.png",4)
+        bala.x = -bala.width*2
+        bala.y = -bala.height*2
         bala.set_total_duration(750)
         bala.name = "fogo"
         bala.dano = 0.45
@@ -80,6 +86,8 @@ def criar_bala(hand,projetil,mouse):
 
     if hand.name == "arco":
         bala = Animation("MdASprites/flechas.png",8)
+        bala.x = -bala.width*2
+        bala.y = -bala.height*2
         bala.set_total_duration(400)
         bala.name = "flecha"
         bala.dano = 0.25
@@ -111,11 +119,15 @@ def criar_espada(hand,armas):
         sword.hand = hand.hand
         sword.dano = 5
         sword.acertados = []
+        sword.x = -sword.width*2
+        sword.y = -sword.height*2
 
         armas.append(sword)
 
     if hand.name == "adaga":
         sword = GameImage("MdASprites/adaga.png")
+        sword.x = -sword.width*2
+        sword.y = -sword.height*2
 
         sword.xspeed,sword.yspeed = 0,0
 
@@ -131,6 +143,8 @@ def criar_espada(hand,armas):
 
     if hand.name == "picareta":
         sword = Animation("MdASprites/sword attack.png",9,False)
+        sword.x = -sword.width*2
+        sword.y = -sword.height*2
         sword.set_total_duration(600)
 
         sword.xspeed,sword.yspeed = 0,0
@@ -146,6 +160,8 @@ def criar_espada(hand,armas):
 
     if hand.name == "machado":
         sword = Animation("MdASprites/Machado anim.png",4,True)
+        sword.x = -sword.width*2
+        sword.y = -sword.height*2
         sword.set_total_duration(1000/4)
 
         sword.xspeed,sword.yspeed = 0,0

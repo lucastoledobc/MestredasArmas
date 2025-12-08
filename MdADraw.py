@@ -1,20 +1,23 @@
 from PPlay.gameimage import *
 
-def draw_cena_antigo(player,cenario,inimigos,projeteis,enemprojeteis,screen):
+def draw_cena(player,cenario,inimigos,projeteis,enemprojeteis,screen):
     draw = []
 
     for c in cenario: 
         if c.name != "floor": draw.append(c)
     for c in inimigos: draw.append(c)
-    for c in enemprojeteis: draw.append(c)
     draw.append(player[0])
-    for c in projeteis: draw.append(c)
 
-    if 1==0:
+    if 1==1:
         for i in range(len(draw)):
             for j in range(len(draw)-1):
                 if draw[j].y + draw[j].height > draw[j+1].y + draw[j+1].height:
                     draw[j], draw[j+1] = draw[j+1], draw[j]
+
+    for c in enemprojeteis: 
+        if c.porcima == 1: draw.append(c)
+        else: draw.insert(0, c)
+    for c in projeteis: draw.append(c)
 
     for c in inimigos: 
         if c.type==0: draw.append(c)
@@ -38,15 +41,15 @@ def draw_cena_antigo(player,cenario,inimigos,projeteis,enemprojeteis,screen):
         else: 
             c.draw()
 
-def draw_cena(player,cenario,inimigos,projeteis,enemprojeteis,screen):
+def draw_cena_novo(player,cenario,inimigos,projeteis,enemprojeteis,screen):
     
     for c in cenario: 
-        if c.name != "floor": c.draw()
+        if c.name != "floor" and c.y+c.height < player[0].y+player[0].height: c.draw()
 
     for c in enemprojeteis: 
         if c.porcima == 0: c.draw()
     for c in inimigos: 
-        if c.type != 0: c.draw()
+        if c.type != 0 and c.y+c.height < player[0].y+player[0].height: c.draw()
 
     if player[0].hp == player[0].hpcor:
         for p in player:
@@ -61,6 +64,12 @@ def draw_cena(player,cenario,inimigos,projeteis,enemprojeteis,screen):
 
         if player[0].hpcor <= player[0].hp: 
             player[0].hpcor = player[0].hp
+
+    for c in inimigos: 
+        if c.type != 0 and c.y+c.height >= player[0].y+player[0].height: c.draw()
+
+    for c in cenario: 
+        if c.name != "floor" and c.y+c.height >= player[0].y+player[0].height: c.draw()
 
     for c in projeteis: c.draw()
     for c in enemprojeteis: 

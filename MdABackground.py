@@ -1,15 +1,17 @@
 from PPlay.gameimage import *
+from MdAConstantes import *
+from MdAKills import *
 
 import random
 
 CONS = 200
 
-def criar_bg(screen,background):
+def criar_bg(screen,background,fase):
 
     x = 0
 
     for i in range(3):
-        floor = GameImage("MdASprites/Background/bg 2.png")
+        floor = GameImage(f"MdASprites/Background/bg 2 - {fase}.png")
 
         floor.name = "floor"
 
@@ -24,57 +26,68 @@ def criar_bg(screen,background):
 
     for i in range(random.randint(4,6)):
 
-        rock = GameImage("MdASprites/Rock Pile - ORANGE -/Rock Pile "+str(random.randint(1,13))+" - ORANGE - BIG.png")
+        rock = GameImage(f"MdASprites/{fase} Pile - ORANGE -/Rock Pile "+str(random.randint(1,13))+" - ORANGE - BIG.png")
 
         rock.x = random.randint(screen.width-450, screen.width)
-        rock.y = random.randint(CONS, screen.height-100)
+        rock.y = random.randint(TOP_TELA,DOWN_TELA-rock.height)
 
-        rock.name = "rock"
+        rock.name = fase
 
         outramatrix.append(rock)
 
     for i in range(len(outramatrix)):
         for j in range(len(outramatrix)-1):    
-            if outramatrix[j].y < outramatrix[j+1].y:
+            if  outramatrix[j].y+outramatrix[j].height > outramatrix[j+1].y+outramatrix[j+1].height:
                 outramatrix[j], outramatrix[j+1] = outramatrix[j+1], outramatrix[j]
 
     for i in outramatrix:
         background.append(i)
 
-def continuar_bg(screen,background):
+def continuar_bg(screen,background,fase):
 
-        rock = GameImage("MdASprites/Rock Pile - ORANGE -/Rock Pile "+str(random.randint(1,13))+" - ORANGE - BIG.png")
+        rock = GameImage(f"MdASprites/{fase} Pile - ORANGE -/Rock Pile "+str(random.randint(1,13))+" - ORANGE - BIG.png")
 
         rock.x = screen.width + 100
-        rock.y = random.randint(CONS, screen.height-100)
+        rock.y = random.randint(TOP_TELA,DOWN_TELA-rock.height)
 
-        rock.name = "rock"
+        rock.name = fase
 
             
         for i in range(len(background)):
             for j in range(len(background)-1):    
-                if background[j].y < background[j+1].y and background[j].name != "floor":
+                if background[j].y+background[j].height > background[j+1].y+background[j+1].height and background[j].name != "floor":
                     background[j], background[j+1] = background[j+1], background[j]
 
         background.append(rock)
 
-def bg_running(background,screen,player,projetil):
+def bg_running(background,screen,player,projetil,fase,morto):
     for b in background:
         b.x -= 180*screen.delta_time()
 
+        if b.name != "floor" and b.x <= -b.width*2:
+            continuar_bg(screen,background,fase)
+            background.remove(b)
+
+
         if b.name != "floor" and player.hp == player.hpcor:
-            if abs(b.y+b.height-(player.y+player.height)) <= 14 and b.collided(player):
+            if abs(b.y+b.height-(player.y+player.height)) <= 20 and b.collided(player):
                 player.hp -= 1
 
         for p in projetil:
-            if p.name == "picareta" and abs(p.height+p.y-(b.y+b.height))<=30 and b.name == "rock":
+            if p.name == "picareta" and abs(p.height+p.y-(b.y+b.height))<=30 and (b.name == "rock" or b.name == "magma"):
                 if p.collided(b):
+                    criar_pedaços_chão(b,morto)
+                    background.remove(b)
+
+            if p.name == "machado" and abs(p.height/2+p.y-(b.y+b.height))<=p.height/2 and (b.name == "forest"):
+                if p.collided(b):
+                    criar_pedaços_chão(b,morto)
                     background.remove(b)
 
     background[0].timer += screen.delta_time()
 
     if background[0].timer >= random.randint(6,8):
-        continuar_bg(screen,background)
+        continuar_bg(screen,background,fase)
         background[0].timer = 0
     
 
@@ -86,5 +99,5 @@ def bg_draw(screen,background,typedraw,player):
         if b.name == "floor" and typedraw == "floor":
             b.draw()
             if b.x<=-b.width:
-                b.x+= 3*b.width-1
+                b.x+= 3*b.width-2
 
