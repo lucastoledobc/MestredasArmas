@@ -177,7 +177,8 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
         'picareta',
         'sword',
         'gun',
-        'metralhadora'
+        'metralhadora',
+        'lança-chamas'
     ]
     armas_s = []
 
@@ -369,11 +370,15 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     player[i+1].name = armas_escolhidas[i]
                     player[i+1].munition = 6
                     player[i+1].cooldown = 0.3
+                if armas_escolhidas[i] == 'lança-chamas':
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 100
+                    player[i+1].cooldown = 0.3
                 if armas_escolhidas[i] == 'machado':
                     player[i+1].name = armas_escolhidas[i]
                     player[i+1].munition = 10
                     player[i+1].cooldown = 0.3
-                if armas_escolhidas[i] == 'matralhadora':
+                if armas_escolhidas[i] == 'metralhadora':
                     player[i+1].name = armas_escolhidas[i]
                     player[i+1].munition = 20
                     player[i+1].cooldown = 0.3
