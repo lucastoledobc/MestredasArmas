@@ -161,13 +161,14 @@ def running_menu(screen, room):
         screen.update()
 
 
-def running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira):
+def running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, fase):
     # título e botões
     title_armas = Sprite("MdASprites/Menu/title_armas.png")
     title_armas.set_position(int(screen.width)/2-title_armas.width/2, 20)
     bjoga = Sprite("MdASprites/Menu/bjoga.png")
     bjoga.set_position(int(screen.width)-bjoga.width-40, screen.height-bjoga.height-30)
-
+    bfases = Sprite("MdASprites/Menu/fases.png")
+    bfases.set_position(40, 550)
 
     armas = [
         'adaga',
@@ -192,13 +193,13 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     for i in range(2):
         item = Sprite("MdASprites/Menu/slot0.png")
-        item.set_position(int(screen.width)/2-item.width*5/4+item.width*3/2*i, 250)
+        item.set_position(int(screen.width)/2-item.width*5/4+item.width*3/2*i, 200)
         slots.append(item)
         slots_e.append(0)
 
     for i in range(len(armas)):
         item = Sprite("MdASprites/Menu/slot0.png")
-        item.set_position(int(screen.width)/2-(item.width*((len(armas)-1)*3/2)+item.width)/2+item.width*3/2*i, 450)
+        item.set_position(int(screen.width)/2-(item.width*((len(armas)-1)*3/2)+item.width)/2+item.width*3/2*i, 350)
         slots.append(item)
         slots_e.append(0)
 
@@ -206,11 +207,36 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
     
     armas_escolhidas = ['','', Sprite, Sprite]
     
+
+    # fases
+
+    fases = ['rock',
+            'forest',
+            'magma'
+            ]
+    
+    fases_print = [Sprite("MdASprites/Menu/rock.png"),
+                   Sprite("MdASprites/Menu/forest.png"),
+                   Sprite("MdASprites/Menu/magma.png")
+                   ]
+    
+    fases_m = []
+    fases_e = 0
+
+
+    for i in range(len(fases)):
+        item = Sprite("MdASprites/Menu/slot10.png")
+        item.set_position(int(screen.width)/2-(item.width*((len(fases)-1)*3/2)+item.width)/2+item.width*3/2*i, 520)
+        fases_print[i].set_position(item.x+item.width/2-fases_print[i].width/2, item.y+item.height/2-fases_print[i].height/2)
+        fases_m.append(item)
+
+
     while room[1] == False:
         screen.set_background_color([0, 0, 0])
 
         title_armas.draw()
         bjoga.draw()
+        bfases.draw()
 
         for item in slots:
             item.draw()
@@ -293,6 +319,30 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
             x=1
 
 
+        for i in range(len(fases)):
+            if mouse.is_over_object(fases_m[i]):
+                if mouse.is_button_pressed(1) and time_click > 0.3:
+                    item = Sprite("MdASprites/Menu/slot12.png")
+                    item.set_position(int(screen.width)/2-(item.width*((len(fases)-1)*3/2)+item.width)/2+item.width*3/2*i, 520)
+                    fases_m[i] = item
+                    fases_e = i
+                    time_click = 0
+
+                else:
+                    item = Sprite("MdASprites/Menu/slot11.png")
+                    item.set_position(int(screen.width)/2-(item.width*((len(fases)-1)*3/2)+item.width)/2+item.width*3/2*i, 520)
+                    fases_m[i] = item
+
+            else:
+                if i != fases_e and fases_m[i] != Sprite("MdASprites/Menu/slot10.png"):
+                    item = Sprite("MdASprites/Menu/slot10.png")
+                    item.set_position(int(screen.width)/2-(item.width*((len(fases)-1)*3/2)+item.width)/2+item.width*3/2*i, 520)
+                    fases_m[i] = item
+        
+            fases_print[i].draw()
+            fases_m[i].draw()
+
+
         if mouse.is_button_pressed(1) and mouse.is_over_object(bjoga):
             room[1] = True
             
@@ -308,32 +358,34 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
             for i in range(2):
                 if armas_escolhidas[i] == 'adaga':
-                    player[i].name = armas_escolhidas[i]
-                    player[i].munition = 0
-                    player[i].cooldown = 0.3
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 0
+                    player[i+1].cooldown = 0.3+1
                 if armas_escolhidas[i] == 'arco':
-                    player[i].name = armas_escolhidas[i]
-                    player[i].munition = 1
-                    player[i].cooldown = 0.3
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 1
+                    player[i+1].cooldown = 0.3
                 if armas_escolhidas[i] == 'gun':
-                    player[i].name = armas_escolhidas[i]
-                    player[i].munition = 6
-                    player[i].cooldown = 0.3
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 6
+                    player[i+1].cooldown = 0.3
                 if armas_escolhidas[i] == 'machado':
-                    player[i].name = armas_escolhidas[i]
-                    player[i].munition = 10
-                    player[i].cooldown = 0.3
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 10
+                    player[i+1].cooldown = 0.3
                 if armas_escolhidas[i] == 'matralhadora':
-                    player[i].name = armas_escolhidas[i]
-                    player[i].munition = 20
-                    player[i].cooldown = 0.3
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 20
+                    player[i+1].cooldown = 0.3
                 if armas_escolhidas[i] == 'picareta':
-                    player[i].name = armas_escolhidas[i]
-                    player[i].munition = 0
-                    player[i].cooldown = 0.3
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 0
+                    player[i+1].cooldown = 0.3
                 if armas_escolhidas[i] == 'sword':
-                    player[i].name = armas_escolhidas[i]
-                    player[i].munition = 0
-                    player[i].cooldown = 0.3
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 0
+                    player[i+1].cooldown = 0.3
+
+        fases[0] = fases[fases_e]
 
         screen.update()

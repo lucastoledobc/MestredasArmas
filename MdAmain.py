@@ -36,10 +36,10 @@ while running[0]:
             enemprojeteis = []
             morto = []
             mira = [scr_mira(mouse)]
-            fase = 'forest'
+            fase = ['rock']
 
         if room[1] == False:
-            running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira)
+            running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, fase)
         else:
             running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase)
 
