@@ -78,11 +78,13 @@ def bg_running(background,screen,player,projetil,fase,morto):
                 if p.collided(b):
                     criar_pedaços_chão(b,morto)
                     background.remove(b)
+                    player.ground+=1
 
             if p.name == "machado" and abs(p.height/2+p.y-(b.y+b.height))<=p.height/2 and (b.name == "forest"):
                 if p.collided(b):
                     criar_pedaços_chão(b,morto)
                     background.remove(b)
+                    player.ground+=1
 
     background[0].timer += screen.delta_time()
 

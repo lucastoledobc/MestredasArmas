@@ -75,3 +75,28 @@ def criar_pedaços_chão(enem,morto):
             m.yspeed = -100
 
         morto.append(m)
+
+
+def pontuação(player,fase):
+    kt = player.kills_type
+    timer = player.timer
+    ground = player.ground
+
+    if fase == "rock":
+        pnts = [100,200,200,1000]
+
+    if fase == "forest":
+        pnts = [100,200,400,50]
+
+    if fase == "magma":
+        pnts = [100,300,200,500]
+
+    pontos = ground*10 + floor(timer)*30
+
+    for k in range(4):
+        pontos += kt[k]*pnts[k]*1.5
+
+    player.kills = pontos
+
+    return pontos
+    

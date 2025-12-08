@@ -170,7 +170,7 @@ def criar_inimigo(screen,room,player,type=1,scene = 'forest'):
             inimigo.dano = 0
             inimigo.timer = 0
             inimigo.x = screen.width
-            inimigo.y = TOP_TELA + random.random()*(DOWN_TELA-TOP_TELA-inimigo.height)
+            inimigo.y = player[0].y+player[0].height - inimigo.height
             inimigo.especie = "forest"
             inimigo.hp = 10
             inimigo.defesa = 0
@@ -443,6 +443,8 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis,fase,m)
 
                 if enem.x <= player[0].x+player[0].width and abs((enem.yy+enem.height)-(player[0].y+player[0].height)) <= enem.height and enem.x >=player[0].width:
                     if enem.collided(player[0]):
+                        if player[0].hp == player[0].hpcor:
+                            player[0].hp -= 1
                         player[0].x = enem.x - enem.width
 
             if enem.type == 4:
@@ -774,7 +776,7 @@ def Scr_enemprojeteis(enemprojeteis,player,screen,enemmatriz):
         
         if p.type == 11:
             p.timer += screen.delta_time()
-            if p.timer > 2.5:
+            if p.timer > 4:
                 enemprojeteis.remove(p)
 
         if p.x < -p.width*3:

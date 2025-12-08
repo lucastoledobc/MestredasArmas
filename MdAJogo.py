@@ -18,7 +18,11 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
     for t in range(len(timer)):
         timer[t] += screen.delta_time()
 
-    screen.set_background_color([74, 138, 237])
+    if fase == "forest": c = [74, 138, 237]
+    if fase == "rock": c = [255, 215, 139]
+    if fase == "magma": c = [58, 54, 126]
+
+    screen.set_background_color(c)
 
     #background = Sprite("MdASprites/BG.png")
 
@@ -46,5 +50,5 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
 
     if player[0].hp <= 0:
+        room[2] += pontuação(player[0],fase)
         room[0] = "GAME OVER"
-        room[2] += player[0].kills*100

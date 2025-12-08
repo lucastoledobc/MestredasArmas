@@ -25,15 +25,18 @@ def draw_cena(player,cenario,inimigos,projeteis,enemprojeteis,screen):
     for c in draw:
         if c == player[0]:
             if player[0].hp == player[0].hpcor:
-                for p in player:
-                    p.draw()
+                player[2].draw()
+                player[0].draw()
+                player[1].draw()
             
             else:
                 if player[0].hp + 1 <= player[0].hpcor: player[0].hpcor = player[0].hp + 1
                 player[0].hpcor -= 0.5*screen.delta_time()
                 if player[0].hpcor*100%8<3:
                         for p in player:
-                            p.draw()
+                            player[2].draw()
+                            player[0].draw()
+                            player[1].draw()
 
                 if player[0].hpcor <= player[0].hp: 
                     player[0].hpcor = player[0].hp

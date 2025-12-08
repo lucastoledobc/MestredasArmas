@@ -22,6 +22,7 @@ def criar_bala(hand,projetil,mouse):
         bala.y = -bala.height*2
         bala.name = "bala"
         bala.dano = 2
+        hand.cooldown = 1.75
 
         bala.x = hand.x+hand.width
         bala.y = hand.y+hand.height/2
@@ -126,7 +127,7 @@ def criar_espada(hand,armas):
 
         sword.name = hand.name
         sword.hand = hand.hand
-        sword.dano = 5
+        sword.dano = 4
         sword.acertados = []
         sword.x = -sword.width*2
         sword.y = -sword.height*2

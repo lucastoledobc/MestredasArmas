@@ -20,7 +20,10 @@ def criar_player(screen):
     player.hp = 3
     player.hpcor = player.hp
 
+    player.ground = 0
     player.hp = 5
+    player.hpmax = player.hp
+    player.timer = 0
     player.kills = 0
     player.kills_type = [0,0,0,0]
 
@@ -80,6 +83,8 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
         screen.draw_text(f"{abs(timer[1]):.2f}",player[1].x+player[1].width/2,player[1].y+player[1].height+20)
     if timer[2] < 0:
         screen.draw_text(f"{abs(timer[2]):.2f}",player[2].x+player[2].width/2,player[2].y+player[2].height+20)
+
+    player[0].timer += screen.delta_time() if player[0].hp != player[0].hpmax else screen.delta_time()*2
 
 
     #extra da metralhadora
@@ -154,7 +159,7 @@ def xspeed_player(y=0):
     esq = Keyboard().key_pressed("A")
     dir = Keyboard().key_pressed("D")
 
-    spd = 200
+    spd = 250
     if y:
         spd *= 0.71
     return (dir-esq)*spd
@@ -163,7 +168,7 @@ def yspeed_player(x=0):
     up = Keyboard().key_pressed("W")
     down = Keyboard().key_pressed("S")
 
-    spd = 200
+    spd = 250
     if x:
         spd *= 0.71
     return (down-up)*spd
