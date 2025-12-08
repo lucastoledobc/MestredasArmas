@@ -302,15 +302,38 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                 armas_escolhidas[1] = 'gun'
 
             player[1] = Animation("MdASprites/Armas/"+str(armas_escolhidas[0])+".png",1,False)
-            player[1].name = armas_escolhidas[0]
-            player[1].munition = 10
-            player[1].cooldown = 0.3
             player[1].hand = 1
             player[2] = Animation("MdASprites/Armas/"+str(armas_escolhidas[1])+".png",1,False)
-            player[2].name = armas_escolhidas[1]
-            player[2].munition = 10
-            player[2].cooldown = 2
             player[2].hand = 2
 
+            for i in range(2):
+                if armas_escolhidas[i] == 'adaga':
+                    player[i].name = armas_escolhidas[i]
+                    player[i].munition = 0
+                    player[i].cooldown = 0.3
+                if armas_escolhidas[i] == 'arco':
+                    player[i].name = armas_escolhidas[i]
+                    player[i].munition = 1
+                    player[i].cooldown = 0.3
+                if armas_escolhidas[i] == 'gun':
+                    player[i].name = armas_escolhidas[i]
+                    player[i].munition = 6
+                    player[i].cooldown = 0.3
+                if armas_escolhidas[i] == 'machado':
+                    player[i].name = armas_escolhidas[i]
+                    player[i].munition = 10
+                    player[i].cooldown = 0.3
+                if armas_escolhidas[i] == 'matralhadora':
+                    player[i].name = armas_escolhidas[i]
+                    player[i].munition = 20
+                    player[i].cooldown = 0.3
+                if armas_escolhidas[i] == 'picareta':
+                    player[i].name = armas_escolhidas[i]
+                    player[i].munition = 0
+                    player[i].cooldown = 0.3
+                if armas_escolhidas[i] == 'sword':
+                    player[i].name = armas_escolhidas[i]
+                    player[i].munition = 0
+                    player[i].cooldown = 0.3
 
         screen.update()
