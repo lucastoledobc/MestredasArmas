@@ -88,7 +88,7 @@ def criar_inimigo(screen,room,player,type=1,scene = 'forest'):
 
             inimigo.dano = 1
             inimigo.especie = "rock"
-            inimigo.hp = 4
+            inimigo.hp = 3
             inimigo.defesa = 1
             inimigo.type = 3
             inimigo.spd = SPD_BACKGROUND
@@ -586,7 +586,7 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis,fase,m)
 
         def dano(enem,p,condicion="none"):
             if  enem.defesa+1!=0:
-                enem.hp -= (p.dano/(enem.defesa+1))*(1+(enem.especie==condicion))
+                enem.hp -= (p.dano/(enem.defesa+1))*(1+0.5*(enem.especie==condicion))
             else:
                 enem.hp -= min(1,p.dano)
 

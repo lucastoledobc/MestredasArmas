@@ -8,7 +8,7 @@ from MdAKills import *
 
 from MdABackground import *
 
-def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase = 'forest'):
+def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase = 'rock'):
 
 
     if background == []:

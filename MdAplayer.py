@@ -28,7 +28,7 @@ def criar_player(screen):
     player.yspeed = 0
 
     hand1 = Animation("MdASprites/sword.png",1,False)
-    hand1.name = "machado"
+    hand1.name = "picareta"
     hand1.cooldown = 0.3
     hand1.hand = 1
     hand2 = Animation("MdASprites/gun.png",1,False)

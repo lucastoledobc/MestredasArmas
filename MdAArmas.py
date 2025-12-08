@@ -172,7 +172,7 @@ def criar_espada(hand,armas):
         sword.hand = hand.hand
         sword.hp = 3
         sword.hpcor = sword.hp
-        sword.dano = 3
+        sword.dano = 2
         sword.acertados = []
 
         armas.append(sword)
