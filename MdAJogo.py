@@ -8,7 +8,7 @@ from MdAKills import *
 
 from MdABackground import *
 
-def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase = 'rock'):
+def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase):
 
 
     if background == []:
@@ -47,4 +47,4 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     if player[0].hp <= 0:
         room[0] = "GAME OVER"
-        room[2] = player[0].kills*100
+        room[2] += player[0].kills*100
