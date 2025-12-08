@@ -21,6 +21,8 @@ def criar_bg(screen,background,fase):
         floor.y = screen.height - floor.height
         background.append(floor)
         x += floor.width
+        floor.xx = 0
+        floor.xxx = 0
 
     outramatrix = []
 
@@ -94,7 +96,32 @@ def bg_running(background,screen,player,projetil,fase,morto):
     
 
 
-def bg_draw(screen,background,typedraw,player):
+def bg_draw(screen,background,typedraw,player,fase):
+
+    sol = Animation(f"MdASprites/Background/sol {fase}.png",1,False)
+    sol.draw()
+
+    p = Animation(f"MdASprites/Background/fundão {fase} 2.png",1,False)
+    p.x = background[0].xxx
+
+    background[0].xxx -= SPD_BACKGROUND*0.4*screen.delta_time()
+
+    if background[0].xxx < -p.width: background[0].xxx = 0
+
+    while p.x < screen.width:
+        p.draw()
+        p.x+=p.width
+
+    p = Animation(f"MdASprites/Background/fundão {fase} 1.png",1,False)
+    p.x = background[0].xx
+
+    background[0].xx -= SPD_BACKGROUND*0.6*screen.delta_time()
+
+    if background[0].xx < -p.width: background[0].xx = 0
+
+    while p.x < screen.width:
+        p.draw()
+        p.x+=p.width
 
     for b in background:
 

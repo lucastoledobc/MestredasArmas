@@ -30,7 +30,7 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     bg_running(background,screen,player[0],projetil,fase,morto)
 
-    bg_draw(screen,background,"floor",player[0])
+    bg_draw(screen,background,"floor",player[0],fase)
     #bg_draw(screen,background,"acima",player[0])
 
 
