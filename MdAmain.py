@@ -41,7 +41,7 @@ while running[0]:
         if room[1] == False:
             running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, fase)
         else:
-            running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase)
+            running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase[0])
 
         final()
 

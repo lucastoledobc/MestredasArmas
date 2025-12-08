@@ -386,6 +386,6 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     player[i+1].munition = 0
                     player[i+1].cooldown = 0.3
 
-        fases[0] = fases[fases_e]
+        fase[0] = fases[fases_e]
 
         screen.update()
