@@ -20,7 +20,7 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     if fase == "forest": c = [74, 138, 237]
     if fase == "rock": c = [255, 215, 139]
-    if fase == "magma": c = [58, 54, 126]
+    if fase == "magma": c = [72, 66, 92]
 
     screen.set_background_color(c)
 

@@ -621,6 +621,16 @@ def Scr_inimigo(screen,room,inimigo,player,timer,projeteis,enemprojeteis,fase,m)
                     if encontrar(p.acertados,enem) == 0:
                         dano(enem,p)
                         p.acertados.append(enem)
+                if p.name == "rocket":    
+                        p.rocket = 1
+                if p.name == "explosion":    
+                    if encontrar(p.acertados,enem) == 0:
+                        dano(enem,p)
+                        p.acertados.append(enem)
+                if p.name == "punch":    
+                    if encontrar(p.acertados,enem) == 0:
+                        dano(enem,p)
+                        p.acertados.append(enem)
 
         if enem.hp <= 0 and enem.type != 0:
                 

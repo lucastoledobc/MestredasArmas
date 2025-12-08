@@ -115,6 +115,40 @@ def criar_bala(hand,projetil,mouse):
 
         projetil.append(bala)
 
+    if hand.name == "rocket-launcher":
+        bala = Animation("MdASprites/rocket.png",3)
+        bala.x = hand.x+hand.width-bala.width
+        bala.y = hand.y+hand.height-bala.height
+        bala.set_total_duration(250)
+        bala.name = "rocket"
+        bala.dano = 20
+        bala.rocket = 0
+
+        bala.ant = 1
+
+        dx = bala.x - mouse.get_position()[0] + random.randint(-10,10)
+        dy = bala.y - mouse.get_position()[1] + random.randint(-10,10)
+
+        dist = sqrt(dx**2+dy**2)
+
+        dx/=-dist
+        dy/=-dist
+
+        bala.dx = mouse.get_position()[0]
+        bala.dy = mouse.get_position()[1]
+
+        bala.hp = 1
+        bala.launch = 0
+        bala.hand = hand.hand
+        bala.spd = 100
+        hand.cooldown = 8
+        bala.acertados = []
+
+        bala.xspeed = dx
+        bala.yspeed = dy
+
+        projetil.append(bala)
+
 
 def criar_espada(hand,armas):
     if hand.name == "sword":
@@ -183,6 +217,26 @@ def criar_espada(hand,armas):
         sword.hp = 3
         sword.hpcor = sword.hp
         sword.dano = 2
+        sword.acertados = []
+
+        armas.append(sword)
+
+    if hand.name == "punch":
+        sword = Animation("MdASprites/punch.png",2,False)
+        sword.x = -sword.width*2
+        sword.y = -sword.height*2
+        sword.stop()
+
+        sword.curr_frame = hand.hand
+
+        sword.xspeed,sword.yspeed = 0,0
+
+        hand.cooldown = 1.75
+
+        sword.name = hand.name
+        sword.xx = 0
+        sword.hand = hand.hand
+        sword.dano = 3
         sword.acertados = []
 
         armas.append(sword)
@@ -322,6 +376,59 @@ def weapons(player,hand,armas,screen,mouse):
                 
                 if arma.y >= screen.height+50:
                     armas.remove(arma)
+                    
+        if arma.name == "rocket":
+            arma.update()
+
+            arma.spd += 300*screen.delta_time()
+
+            arma.x += arma.xspeed*screen.delta_time()*arma.spd
+            arma.y += arma.yspeed*screen.delta_time()*arma.spd
+
+            if abs(arma.x-arma.dx) < 1 or abs(arma.y-arma.dy) < 1: arma.rocket = 1
+
+            if arma.rocket == 1:
+                bala = Animation("MdASprites/rocket explosion.png",4,False)
+                bala.x = arma.x+arma.width/2-bala.width/2
+                bala.y = arma.y+arma.height/2-bala.height/2
+                bala.set_total_duration(1000/3)
+                bala.name = "explosion"
+                bala.dano = 20
+
+                bala.ant = 1
+                bala.acertados = []
+
+                armas.append(bala)
+                armas.remove(arma)
+                
+        if arma.name == "explosion":
+
+            arma.update()
+            if arma.is_playing() == False:
+                armas.remove(arma)
+
+        if arma.name == "punch":
+
+            n = arma.hand
+
+            arma.curr_frame = n-1
+            arma.update()
+
+            arma.x = player.x+player.width+arma.xx*150
+            arma.y = player.y+player.height/2-arma.height/2
+
+            for c in arma.acertados:
+                c.x += screen.delta_time()*200
+
+            arma.xx += screen.delta_time()*3
+
+            hand[n].hide()
+
+            if arma.xx >= 0.6:
+                armas.remove(arma)
+                hand[n].unhide()
+
+                
 
             
 

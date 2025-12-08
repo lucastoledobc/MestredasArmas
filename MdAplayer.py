@@ -62,6 +62,12 @@ def ataque(hand,projetil,mouse):
 
     if hand.name == "machado":
         criar_espada(hand,projetil)
+
+    if hand.name == "punch":
+        criar_espada(hand,projetil)
+
+    if hand.name == "rocket-launcher":
+        criar_bala(hand,projetil,mouse)
         
 
 

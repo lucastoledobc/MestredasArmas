@@ -26,7 +26,7 @@ def criar_bg(screen,background,fase):
 
     outramatrix = []
 
-    for i in range(random.randint(4,6)):
+    for i in range(random.randint(3,4)):
 
         rock = GameImage(f"MdASprites/{fase} Pile - ORANGE -/Rock Pile "+str(random.randint(1,13))+" - ORANGE - BIG.png")
 
@@ -87,6 +87,14 @@ def bg_running(background,screen,player,projetil,fase,morto):
                     criar_pedaços_chão(b,morto)
                     background.remove(b)
                     player.ground+=1
+
+            if p.name == "explosion" and b.name != "floor":
+                if p.collided(b):
+                    criar_pedaços_chão(b,morto)
+                    background.remove(b)
+                    player.ground+=1
+
+
 
     background[0].timer += screen.delta_time()
 

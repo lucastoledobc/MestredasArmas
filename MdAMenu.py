@@ -389,7 +389,15 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                 if armas_escolhidas[i] == 'sword':
                     player[i+1].name = armas_escolhidas[i]
                     player[i+1].munition = 0
-                    player[i+1].cooldown = 0.3
+                    player[i+1].cooldown = 0.
+                if armas_escolhidas[i] == 'rocket-launcher':
+                    player[i+1].name = armas_escolhidas[i]
+                    player[i+1].munition = 0
+                    player[i+1].cooldown = 10
+                if armas_escolhidas[i] == f'punch{i+1}':
+                    player[i+1].name = 'punch'
+                    player[i+1].munition = 0
+                    player[i+1].cooldown = 1
 
         fase[0] = fases[fases_e]
 
