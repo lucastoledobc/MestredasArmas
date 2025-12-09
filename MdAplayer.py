@@ -157,7 +157,7 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
 
     player[0].kills = kills
 
-    screen.draw_text("KILLS: "+str(player[0].kills),50,100,24,[255,255,255])
+    # screen.draw_text("KILLS: "+str(player[0].kills),50,100,24,[255,255,255])
 
 
 

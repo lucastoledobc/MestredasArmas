@@ -138,3 +138,21 @@ def bg_draw(screen,background,typedraw,player,fase):
             if b.x<=-b.width:
                 b.x+= 3*b.width-2
 
+
+def pontos(player, fase):
+    pontos_temp = pontuação(player[0], fase)
+    print(pontos_temp)
+    
+    pontos = Sprite("MdASprites/Background/pontos/pontos.png")
+    pontos.set_position(10, 10)
+
+    score2=[]
+    texto=str(int(pontos_temp))
+    for i in range(len(texto)):
+        x = Sprite("MdASprites/Background/pontos/"+texto[i]+".png")
+        x.set_position(pontos.width+20+i*20, 10)
+        score2.append(x)
+        
+    pontos.draw()
+    for i in range(len(score2)):
+        score2[i].draw()

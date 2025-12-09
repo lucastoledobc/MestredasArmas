@@ -48,6 +48,7 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     scr_mira_running(mira[0],mouse)
 
+    pontos(player, fase)
 
     if player[0].hp <= 0:
         room[2] += pontuação(player[0],fase)
