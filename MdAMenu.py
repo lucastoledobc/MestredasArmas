@@ -414,5 +414,6 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
         fase[0] = fases[fases_e]
         room[3] = fases_e+2
+        player[0].timer_da_fase = 30
 
         screen.update()

@@ -48,9 +48,12 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     scr_mira_running(mira[0],mouse)
 
-    pontos(player, fase)
+    pontos(player, fase, room)
+    tempo(player[0])
 
     if player[0].hp <= 0:
+        room[0] = "GAME OVER"
+
+    if room[0] != "Jogo":
         room[2] += pontuação(player[0],fase)
         room[3] = 0
-        room[0] = "GAME OVER"

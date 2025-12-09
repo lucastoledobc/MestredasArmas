@@ -24,6 +24,7 @@ def criar_player(screen):
     player.hp = 5
     player.hpmax = player.hp
     player.timer = 0
+    player.timer_da_fase = 2
     player.kills = 0
     player.kills_type = [0,0,0,0]
 
@@ -90,7 +91,8 @@ def Scr_player(screen,room,player,timer,mouse,projetil):
     if timer[2] < 0:
         screen.draw_text(f"{abs(timer[2]):.2f}",player[2].x+player[2].width/2,player[2].y+player[2].height+20)
 
-    player[0].timer += screen.delta_time() if player[0].hp != player[0].hpmax else screen.delta_time()*2
+    player[0].timer += screen.delta_time() if player[0].hp != player[0].hpmax else screen.delta_time()*2    
+    player[0].timer_da_fase -= screen.delta_time()
 
 
     #extra da metralhadora

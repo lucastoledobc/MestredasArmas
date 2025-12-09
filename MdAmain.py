@@ -60,6 +60,10 @@ while running[0]:
                 fmusica(room, musica)
 
             running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase[0])
+            if player[0].timer_da_fase <= 0:
+                entrar = True
+                room[1] = False
+                room[3] = 1
 
         final()
 
