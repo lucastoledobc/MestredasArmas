@@ -23,12 +23,13 @@ entrar = True
 
 running = [True]
 
-musica = [Sound("MdASprites/Sounds/musica0.mp3")]
+musica = [Sound("MdASprites/Sounds/menu-8_bit.mp3")]
 
 
 while running[0]:
     if room[0] == "Menu":
-        if room[3] == 0:
+        if room[3] != -1:
+            room[3]=0
             fmusica(room, musica)
 
         running_menu(screen, room)
@@ -49,9 +50,13 @@ while running[0]:
             fase = ['rock']
 
         if room[1] == False:
+            if room[3]!=-1:
+                room[3]=1
+                fmusica(room, musica)
+                
             running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, fase)
         else:
-            if room[3]==1:
+            if room[3]!=-1:
                 fmusica(room, musica)
 
             running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase[0])

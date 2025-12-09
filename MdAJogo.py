@@ -52,4 +52,5 @@ def running_jogo(screen, room, player, inimigo, timer, mouse, projetil, backgrou
 
     if player[0].hp <= 0:
         room[2] += pontuação(player[0],fase)
+        room[3] = 0
         room[0] = "GAME OVER"

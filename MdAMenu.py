@@ -1,5 +1,7 @@
 from PPlay.window import *
 from PPlay.sprite import *
+from PPlay.animation import *
+
 import random
 
 def menu_rank(screen):
@@ -47,6 +49,7 @@ def menu_rank(screen):
 def running_menu(screen, room):
     # variáveis
     mouse = screen.get_mouse()
+    room[3]=1
 
 
     ### lista das pontuações
@@ -410,5 +413,6 @@ def running_arma(screen, room, player, inimigo, timer, mouse, projetil, backgrou
                     player[i+1].cooldown = 10
 
         fase[0] = fases[fases_e]
+        room[3] = fases_e+2
 
         screen.update()
