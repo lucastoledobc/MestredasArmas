@@ -141,7 +141,6 @@ def bg_draw(screen,background,typedraw,player,fase):
 
 def pontos(player, fase):
     pontos_temp = pontuação(player[0], fase)
-    print(pontos_temp)
     
     pontos = Sprite("MdASprites/Background/pontos/pontos.png")
     pontos.set_position(10, 10)

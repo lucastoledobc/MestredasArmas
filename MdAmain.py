@@ -6,13 +6,16 @@ from PPlay.gameimage import *
 from MdAJogo import *
 from MdAgameover import *
 from MdAMenu import *
+from MdASounds import *
+
 
 def final():
 
     screen.update()
 
-# room [Menu/Jogo/Game Over, Seleção de armas, Pontuação]
-room = ["Menu", False, 0]
+
+# room [Menu/Jogo/Game Over, Seleção de armas, Pontuação, Musica]
+room = ["Menu", False, 0, 0]
 
 screen = Window(1280,720)
 screen.set_title("Mestre das Armas")
@@ -20,10 +23,17 @@ entrar = True
 
 running = [True]
 
+musica = [Sound("MdASprites/Sounds/musica0.mp3")]
+
+
 while running[0]:
     if room[0] == "Menu":
+        if room[3] == 0:
+            fmusica(room, musica)
+
         running_menu(screen, room)
-        
+
+
     if room[0] == "Jogo":
         if entrar:
             mouse = screen.get_mouse()
@@ -41,6 +51,9 @@ while running[0]:
         if room[1] == False:
             running_arma(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, fase)
         else:
+            if room[3]==1:
+                fmusica(room, musica)
+
             running_jogo(screen, room, player, inimigo, timer, mouse, projetil, background, enemprojeteis, mira, morto, fase[0])
 
         final()
